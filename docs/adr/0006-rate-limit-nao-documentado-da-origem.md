@@ -5,42 +5,63 @@ Aceita — 2026-09-14
 ## Contexto
 
 A documentação da API não menciona limite de requisições. Na prática ele
-existe: a primeira tentativa de pré-renderizar as 51 rotas falhou com
-HTTP 429 no episódio 51, abortando a construção.
+existe, e apareceu duas vezes.
 
-A causa é o paralelismo. O Next distribui a geração estática entre vários
-processos de trabalho, e cada um mantinha seu próprio cliente HTTP sem
-qualquer coordenação.
+Primeiro na máquina local: a tentativa inicial de pré-renderizar as 51
+rotas falhou com HTTP 429, abortando a construção. O Next distribui a
+geração estática entre vários processos, e cada um mantinha seu próprio
+cliente HTTP sem coordenação — algo em torno de cem requisições
+concorrentes.
+
+Depois na integração contínua, de forma mais dura: o endereço de saída do
+GitHub Actions é compartilhado entre muitos projetos e já chega
+limitado. Mesmo com concorrência reduzida, a construção falhava de forma
+imprevisível.
+
+A segunda ocorrência é a mais grave. Uma publicação que só funciona
+dependendo do humor de um serviço externo não é publicação confiável.
 
 ## Decisão
 
-Tratar o limite como característica da origem, e não como falha
-transitória a ignorar:
+Separar **obter os dados** de **renderizar as páginas**.
 
-- **Semáforo** no cliente HTTP, limitando a três requisições simultâneas
-  por processo.
-- **Retentativa com espera exponencial**, teto de 10 segundos, restrita a
-  status efetivamente temporários. Um 400 não é repetido.
-- **Respeito ao cabeçalho `Retry-After`** quando a origem o envia, em
-  lugar da espera calculada.
-- **Redução dos processos de trabalho** da construção para três.
+Um passo de pré-construção busca o catálogo inteiro de uma vez, de forma
+sequencial e cooperativa, e grava `lib/catalog-snapshot.json`:
 
-Os avatares deixaram de passar pelo otimizador de imagens do Next, que
-reproduzia o mesmo problema ao buscar 65 arquivos de uma vez. Ver
-[ADR 2](0002-geracao-estatica-das-rotas-de-episodio.md).
+- 3 requisições paginadas para os 51 episódios;
+- 9 requisições em lote para os 826 personagens.
+
+Doze requisições no total, com concorrência dois, contra as cerca de cem
+concorrentes da abordagem anterior.
+
+A renderização passa a consumir o `SnapshotGateway`, que implementa as
+mesmas portas a partir desse arquivo. Nenhuma requisição parte durante a
+geração das páginas.
+
+O cliente HTTP mantém semáforo, espera exponencial e respeito ao
+cabeçalho `Retry-After`, porque continua sendo o caminho usado pelo BFF e
+pelo recuo quando não há catálogo.
+
+O arquivo é versionado. O passo de pré-construção o regenera a cada
+publicação; mantê-lo no repositório garante que verificação de tipos,
+testes e construção funcionem sem rede.
 
 ## Consequências
 
-A construção passou de aproximadamente 6 para 55 segundos. O tempo é
-dominado por espera deliberada, não por processamento.
+A construção caiu de **55 para 4,5 segundos** e passou a ser
+determinística: o mesmo commit produz o mesmo resultado, independente do
+estado da origem.
 
-O custo é integralmente pago em tempo de construção. O tempo de resposta
-em produção permanece de 3 a 5 ms, porque as páginas já estão prontas.
+A integração contínua deixou de depender da disponibilidade de um
+serviço de terceiros para publicar.
 
-A alternativa seria elevar o paralelismo e aceitar falhas intermitentes
-na construção — comportamento pior, porque transforma a publicação em
-algo não determinístico.
+O catálogo ocupa 260 KB versionados. É cache de construção, gerado por
+integração real com a API, e não dado transcrito à mão.
 
-O semáforo é por processo, não global. Se a construção voltasse a ser
-distribuída de forma mais ampla, o limite efetivo cresceria de novo, e o
-próximo passo seria coordenação externa.
+O `SnapshotGateway` existe porque as portas já estavam definidas. Trocar a
+origem dos dados custou uma classe e uma linha no composition root, sem
+tocar em domínio, casos de uso ou componentes — ver
+[ADR 1](0001-arquitetura-hexagonal-proporcional.md).
+
+Como efeito secundário, as rotas dinâmicas remanescentes passaram a
+responder do catálogo em memória, sem alcançar a origem.

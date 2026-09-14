@@ -38,4 +38,5 @@ Episódios novos exigem nova construção. Para uma série encerrada isso é
 irrelevante; num catálogo vivo, o gatilho seria revalidação por webhook.
 
 A construção passou a depender da origem, o que trouxe o problema tratado
-no [ADR 6](0006-rate-limit-nao-documentado-da-origem.md).
+no [ADR 6](0006-rate-limit-nao-documentado-da-origem.md) e levou à
+separação entre obter dados e renderizar páginas.

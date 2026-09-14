@@ -33,7 +33,7 @@
   "ignorePatterns": ["**/dist/**", "**/.next/**", "**/coverage/**", "**/node_modules/**"],
   "overrides": [
     {
-      "files": ["**/http-client.ts"],
+      "files": ["**/http-client.ts", "**/rick-and-morty-gateway.ts"],
       "rules": {
         "no-await-in-loop": "off"
       }

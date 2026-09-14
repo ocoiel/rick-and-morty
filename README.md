@@ -49,7 +49,8 @@ requisições para montar uma única tela.
 | 404 de episódio inexistente      | 3 ms         |
 | Construção completa (55 páginas) | 55 s         |
 
-Medições locais com `next start`. A construção é lenta de propósito: ver
+Medições locais com `next start`. A construção não faz requisição alguma: o
+catálogo é obtido uma vez, antes dela — ver
 [ADR 6](docs/adr/0006-rate-limit-nao-documentado-da-origem.md).
 
 ---
@@ -134,8 +135,11 @@ código os lançaria depois do "Z". Empates são resolvidos pelo identificador,
 para que a saída seja determinística entre construções.
 
 **A origem tem limite de requisições não documentado.** A primeira tentativa de
-gerar as 51 páginas falhou com HTTP 429. Resolvido com semáforo, espera
-exponencial e respeito ao cabeçalho `Retry-After`.
+gerar as 51 páginas falhou com HTTP 429, e na integração contínua o problema era
+pior, porque o endereço de saída é compartilhado. Resolvido separando obter
+dados de renderizar páginas: doze requisições em lote antes da construção, e
+nenhuma durante. A construção caiu de 55 para 4,5 segundos e ficou
+determinística.
 
 **`notFound()` não devolvia 404.** Com Cache Components, o invólucro estático
 parte antes do conteúdo transmitido, então `/episode/999` respondia 200 com a
