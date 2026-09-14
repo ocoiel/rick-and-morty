@@ -61,7 +61,7 @@ export class RickAndMortyHttpGateway implements EpisodeGateway, CharacterGateway
     this.http = new HttpClient({
       baseUrl: options.baseUrl ?? DEFAULT_BASE_URL,
       timeoutMs: options.timeoutMs ?? 5000,
-      retries: options.retries ?? 4,
+      retries: options.retries ?? 5,
       fetchFn: options.fetchFn ?? globalThis.fetch,
       ...(options.maxConcurrency !== undefined && { maxConcurrency: options.maxConcurrency }),
       ...(options.backoffBaseMs !== undefined && { backoffBaseMs: options.backoffBaseMs }),

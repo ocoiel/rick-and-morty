@@ -16,9 +16,9 @@ export interface HttpResponse {
 }
 
 const RETRIABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
-const DEFAULT_MAX_CONCURRENCY = 6;
-const DEFAULT_BACKOFF_BASE_MS = 300;
-const MAX_BACKOFF_MS = 8000;
+const DEFAULT_MAX_CONCURRENCY = 3;
+const DEFAULT_BACKOFF_BASE_MS = 500;
+const MAX_BACKOFF_MS = 10_000;
 
 const delay = (ms: number) =>
   new Promise<void>((resolve) => {
