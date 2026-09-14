@@ -1,28 +1,5 @@
 @import 'tailwindcss';
-
-@theme {
-  --color-void: #07090c;
-  --color-surface: #0e1319;
-  --color-surface-raised: #151c24;
-  --color-border: #1f2933;
-  --color-border-strong: #2d3a47;
-
-  --color-portal: #7fd14a;
-  --color-portal-bright: #a5f065;
-  --color-portal-dim: #3f6b24;
-  --color-plumbus: #f0a6c8;
-  --color-cosmic: #5bc0eb;
-
-  --color-ink: #eef4f8;
-  --color-ink-muted: #9aa8b6;
-  --color-ink-faint: #64717e;
-
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-
-  --radius-card: 14px;
-
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-}
+@import '@zrp/design-tokens/tokens.css';
 
 @layer base {
   * {
