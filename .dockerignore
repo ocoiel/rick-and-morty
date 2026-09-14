@@ -1,0 +1,12 @@
+**/node_modules
+**/.next
+**/dist
+**/coverage
+**/.turbo
+**/playwright-report
+**/test-results
+**/.git
+**/.env*.local
+**/*.log
+Dockerfile*
+docker-compose*.yml

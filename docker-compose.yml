@@ -1,0 +1,36 @@
+name: rick-and-morty
+
+services:
+  bff:
+    build:
+      context: .
+      dockerfile: apps/bff/Dockerfile
+    image: zrp/bff:local
+    ports:
+      - '3333:3333'
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3333
+      RICK_AND_MORTY_API_URL: https://rickandmortyapi.com/api
+      CACHE_ENABLED: 'true'
+      LOG_LEVEL: info
+      CORS_ORIGIN: http://localhost:3000
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    image: zrp/web:local
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      RICK_AND_MORTY_API_URL: https://rickandmortyapi.com/api
+    depends_on:
+      bff:
+        condition: service_healthy
+    restart: unless-stopped
