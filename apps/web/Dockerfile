@@ -9,11 +9,15 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV BUILD_STANDALONE=true
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.base.json ./
 COPY packages/core/package.json packages/core/
+COPY packages/design-tokens/package.json packages/design-tokens/
 COPY apps/web/package.json apps/web/
 RUN pnpm install --frozen-lockfile
 COPY packages/core ./packages/core
+COPY packages/design-tokens ./packages/design-tokens
 COPY apps/web ./apps/web
-RUN pnpm --filter @zrp/core build && pnpm --filter @zrp/web build
+# "..." inclui as dependências de workspace em ordem topológica: um pacote novo
+# no grafo não exige lembrar de editar esta linha.
+RUN pnpm --filter "@zrp/web..." build
 
 FROM base AS runner
 ENV NODE_ENV=production
