@@ -2,11 +2,11 @@ import {
   GetCharacterAppearancesUseCase,
   GetEpisodeCastUseCase,
   ListEpisodeNumbersUseCase,
-} from './application/index.js';
-import type { CacheStore, CharacterGateway, EpisodeGateway } from './application/ports/index.js';
-import { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.js';
-import { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.js';
-import { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-gateway.js';
+} from './application/index.ts';
+import type { CacheStore, CharacterGateway, EpisodeGateway } from './application/ports/index.ts';
+import { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.ts';
+import { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.ts';
+import { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-gateway.ts';
 
 export interface ContainerConfig {
   readonly apiBaseUrl?: string;
@@ -37,6 +37,8 @@ export function createContainer(config: ContainerConfig = {}): Container {
     ...(config.timeoutMs !== undefined && { timeoutMs: config.timeoutMs }),
     ...(config.retries !== undefined && { retries: config.retries }),
     ...(config.fetchFn !== undefined && { fetchFn: config.fetchFn }),
+    ...(config.maxConcurrency !== undefined && { maxConcurrency: config.maxConcurrency }),
+    ...(config.backoffBaseMs !== undefined && { backoffBaseMs: config.backoffBaseMs }),
   });
 
   const episodeGateway = config.episodeGateway ?? httpGateway;

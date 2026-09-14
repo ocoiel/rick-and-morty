@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
-import { DomainError, InvalidEpisodeNumberError } from '@zrp/core';
+import { DomainError, InvalidEpisodeNumberError, PUBLIC_DAY_CACHE_CONTROL } from '@zrp/core';
 import { container } from '@/lib/container';
-
-const CACHE_CONTROL = 'public, max-age=86400, stale-while-revalidate=86400';
 
 export async function GET(
   _request: Request,
@@ -13,7 +11,7 @@ export async function GET(
   try {
     const payload = await container.getCharacterAppearances.execute({ characterId: id });
 
-    return NextResponse.json(payload, { headers: { 'cache-control': CACHE_CONTROL } });
+    return NextResponse.json(payload, { headers: { 'cache-control': PUBLIC_DAY_CACHE_CONTROL } });
   } catch (error) {
     if (error instanceof InvalidEpisodeNumberError) {
       return NextResponse.json(

@@ -1,11 +1,16 @@
+import {
+  DEFAULT_API_BASE_URL,
+  DEFAULT_UPSTREAM_RETRIES,
+  DEFAULT_UPSTREAM_TIMEOUT_MS,
+} from '@zrp/core';
 import { z } from 'zod';
 
 const configSchema = z.object({
   host: z.string().default('0.0.0.0'),
   port: z.coerce.number().int().positive().default(3333),
-  apiBaseUrl: z.string().url().default('https://rickandmortyapi.com/api'),
-  upstreamTimeoutMs: z.coerce.number().int().positive().default(5000),
-  upstreamRetries: z.coerce.number().int().nonnegative().default(2),
+  apiBaseUrl: z.string().url().default(DEFAULT_API_BASE_URL),
+  upstreamTimeoutMs: z.coerce.number().int().positive().default(DEFAULT_UPSTREAM_TIMEOUT_MS),
+  upstreamRetries: z.coerce.number().int().nonnegative().default(DEFAULT_UPSTREAM_RETRIES),
   cacheEnabled: z
     .string()
     .default('true')
