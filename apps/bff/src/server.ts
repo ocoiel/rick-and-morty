@@ -4,6 +4,7 @@ import Fastify, { type FastifyInstance } from 'fastify';
 import { createContainer, type Container } from '@zrp/core';
 import type { AppConfig } from './config.ts';
 import { registerErrorHandler } from './plugins/error-handler.ts';
+import { createCharacterRoutes } from './routes/characters.ts';
 import { createEpisodeRoutes } from './routes/episodes.ts';
 
 export interface BuildServerOptions {
@@ -38,6 +39,7 @@ export async function buildServer({
   );
 
   await app.register(createEpisodeRoutes(resolved), { prefix: '/api' });
+  await app.register(createCharacterRoutes(resolved), { prefix: '/api' });
 
   return app;
 }
