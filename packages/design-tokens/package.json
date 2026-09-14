@@ -1,0 +1,29 @@
+{
+  "name": "@zrp/design-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./theme.dart": "./dist/theme.dart",
+    "./tokens.json": "./tokens.json"
+  },
+  "files": [
+    "dist",
+    "tokens.json"
+  ],
+  "scripts": {
+    "build": "node --experimental-strip-types src/generate.ts",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src tests"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "oxlint": "^1.83.0",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}
