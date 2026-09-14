@@ -11,8 +11,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint app components lib tests",
-    "prebuild": "node --experimental-strip-types scripts/generate-catalog.ts"
+    "lint": "oxlint app components lib tests e2e scripts proxy.ts",
+    "prebuild": "node --experimental-strip-types scripts/prefetch-catalog.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.102.8",

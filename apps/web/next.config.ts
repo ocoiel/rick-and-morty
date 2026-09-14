@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ['@tanstack/react-query'],
-    cpus: 3,
   },
 };
 

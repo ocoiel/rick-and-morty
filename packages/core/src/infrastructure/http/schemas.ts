@@ -42,7 +42,15 @@ export const episodeSummaryResponseSchema = z.union([
 ]);
 
 export const episodeIndexSchema = z.object({
-  info: z.object({ count: z.number().int().nonnegative() }),
+  info: z.object({
+    count: z.number().int().nonnegative(),
+    pages: z.number().int().nonnegative(),
+  }),
+});
+
+export const episodePageSchema = z.object({
+  info: z.object({ pages: z.number().int().nonnegative() }),
+  results: z.array(episodeDtoSchema),
 });
 
 export type CharacterDto = z.infer<typeof characterDtoSchema>;

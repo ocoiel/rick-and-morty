@@ -4,3 +4,6 @@ dist
 coverage
 pnpm-lock.yaml
 .turbo
+next-env.d.ts
+.next
+apps/web/lib/catalog-snapshot.json

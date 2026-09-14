@@ -5,6 +5,7 @@ import {
   charactersResponseSchema,
   episodeDtoSchema,
   episodeIndexSchema,
+  episodePageSchema,
   episodeSummaryResponseSchema,
 } from './schemas.ts';
 
@@ -159,6 +160,41 @@ export class RickAndMortyHttpGateway implements EpisodeGateway, CharacterGateway
       code: summary.episode,
       name: summary.name,
     }));
+  }
+
+  async listEpisodes(): Promise<readonly EpisodeRecord[]> {
+    const records: EpisodeRecord[] = [];
+    let page = 1;
+    let totalPages = 1;
+
+    do {
+      const { body } = await this.http.get(`/episode?page=${page}`);
+      const parsed = episodePageSchema.safeParse(body);
+
+      if (!parsed.success) {
+        throw new UpstreamUnavailableError('Não foi possível listar os episódios.', {
+          cause: parsed.error,
+        });
+      }
+
+      totalPages = parsed.data.info.pages;
+
+      for (const dto of parsed.data.results) {
+        records.push({
+          number: dto.id,
+          name: dto.name,
+          code: dto.episode,
+          airDate: dto.air_date,
+          characterIds: dto.characters
+            .map((url) => idFromUrl(url))
+            .filter((id): id is number => id !== null),
+        });
+      }
+
+      page += 1;
+    } while (page <= totalPages);
+
+    return records;
   }
 
   private async fetchCharacterBatch(ids: readonly number[]): Promise<Character[]> {

@@ -9,6 +9,8 @@ export {
 export type { RickAndMortyGatewayOptions } from './infrastructure/http/rick-and-morty-gateway.ts';
 export { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.ts';
 export { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.ts';
+export { SnapshotGateway } from './infrastructure/snapshot/catalog-snapshot.ts';
+export type { CatalogSnapshot } from './infrastructure/snapshot/catalog-snapshot.ts';
 export { ONE_DAY_MS, ONE_DAY_SECONDS, PUBLIC_DAY_CACHE_CONTROL } from './cache-policy.ts';
 export { createContainer } from './composition-root.ts';
 export type { Container, ContainerConfig } from './composition-root.ts';
