@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { describe, expect, it } from 'vitest';
-import { proxy } from '@/proxy';
 import { TOTAL_EPISODES } from '@/lib/episode-catalog';
+import { proxy } from '@/proxy';
 
 function requestFor(path: string): NextRequest {
   return new NextRequest(new URL(path, 'https://exemplo.test'));

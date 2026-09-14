@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import type { Character } from '@zrp/core';
 import { StatusBadge } from './status-badge';
+
+import type { Character } from '@zrp/core';
 
 export interface CharacterCardProps {
   readonly character: Character;

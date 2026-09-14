@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import { CastExplorer } from '@/components/cast-explorer';
 import { EpisodeNav } from '@/components/episode-nav';
 import { EpisodeSearchForm } from '@/components/episode-search-form';
 import { getEpisodeCast, listEpisodeNumbers } from '@/lib/episodes';
+
+import type { Metadata } from 'next';
 
 interface EpisodePageProps {
   readonly params: Promise<{ readonly id: string }>;

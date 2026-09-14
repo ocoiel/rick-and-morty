@@ -1,5 +1,7 @@
+import { PUBLIC_DAY_CACHE_CONTROL } from '@zrp/core';
+
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
-import { PUBLIC_DAY_CACHE_CONTROL, type Container } from '@zrp/core';
+import type { Container } from '@zrp/core';
 
 export function createEpisodeRoutes(container: Container): FastifyPluginAsync {
   return async (app: FastifyInstance) => {

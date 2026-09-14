@@ -1,6 +1,8 @@
-import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import { Providers } from '@/components/providers';
+
+import type { Metadata, Viewport } from 'next';
+
 import './globals.css';
 
 const display = Space_Grotesk({

@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
-import type { Character } from '@zrp/core';
 import { StatusBadge } from './status-badge';
+
+import type { Character } from '@zrp/core';
 
 export interface CharacterEpisodes {
   readonly episodes: readonly { readonly number: number; readonly code: string }[];

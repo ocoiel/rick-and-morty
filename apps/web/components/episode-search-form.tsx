@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useId, useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 
 export interface EpisodeSearchFormProps {
   readonly totalEpisodes: number;

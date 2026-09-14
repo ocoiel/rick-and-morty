@@ -1,6 +1,7 @@
 import { ONE_DAY_MS } from '../../cache-policy.ts';
-import type { Character } from '../../domain/index.ts';
 import { EpisodeCast, EpisodeNumber } from '../../domain/index.ts';
+
+import type { Character } from '../../domain/index.ts';
 import type { CacheStore, EpisodeGateway } from '../ports/index.ts';
 
 export interface GetEpisodeCastInput {
