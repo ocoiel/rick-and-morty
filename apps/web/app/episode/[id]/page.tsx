@@ -29,7 +29,32 @@ export async function generateMetadata({ params }: EpisodePageProps): Promise<Me
   };
 }
 
-async function EpisodeCast({ id, total }: { id: string; total: number }) {
+async function EpisodeSearch({ params }: EpisodePageProps) {
+  const { id } = await params;
+  const episodes = await listEpisodeNumbers();
+
+  return <EpisodeSearchForm totalEpisodes={episodes.length} initialValue={id} />;
+}
+
+function EpisodeSearchSkeleton() {
+  return (
+    <div className="w-full">
+      <div className="shimmer mb-2 h-5 w-36 rounded" />
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="shimmer flex-1 rounded-xl px-4 py-3 text-lg">&nbsp;</div>
+        <div className="shimmer rounded-xl px-6 py-3 sm:min-w-36">&nbsp;</div>
+      </div>
+      <p className="mt-2 text-sm">&nbsp;</p>
+    </div>
+  );
+}
+
+async function EpisodeCast({ params }: EpisodePageProps) {
+  const { id } = await params;
+  const episodes = await listEpisodeNumbers();
+
+  if (!episodes.includes(Number(id))) notFound();
+
   const cast = await getEpisodeCast(id);
 
   if (!cast) notFound();
@@ -47,7 +72,7 @@ async function EpisodeCast({ id, total }: { id: string; total: number }) {
           <p className="mt-2 text-sm text-ink-muted">Exibido em {cast.episode.airDate}</p>
         </div>
 
-        <EpisodeNav current={cast.episode.number} total={total} />
+        <EpisodeNav current={cast.episode.number} total={episodes.length} />
       </header>
 
       <CastExplorer characters={cast.characters} />
@@ -78,12 +103,7 @@ function CastSkeleton() {
   );
 }
 
-export default async function EpisodePage({ params }: EpisodePageProps) {
-  const { id } = await params;
-  const episodes = await listEpisodeNumbers();
-
-  if (!episodes.includes(Number(id))) notFound();
-
+export default function EpisodePage({ params }: EpisodePageProps) {
   return (
     <main id="conteudo" className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
@@ -92,12 +112,14 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
         </Link>
 
         <div className="w-full sm:w-auto sm:min-w-80">
-          <EpisodeSearchForm totalEpisodes={episodes.length} initialValue={id} />
+          <Suspense fallback={<EpisodeSearchSkeleton />}>
+            <EpisodeSearch params={params} />
+          </Suspense>
         </div>
       </div>
 
       <Suspense fallback={<CastSkeleton />}>
-        <EpisodeCast id={id} total={episodes.length} />
+        <EpisodeCast params={params} />
       </Suspense>
     </main>
   );
