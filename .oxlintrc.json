@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "promise"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "pedantic": "warn"
+  },
+  "env": {
+    "es2024": true,
+    "node": true,
+    "browser": true
+  },
+  "rules": {
+    "no-console": "error",
+    "eqeqeq": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-explicit-any": "error",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ],
+    "unicorn/prefer-top-level-await": "off",
+    "unicorn/no-useless-undefined": "off",
+    "max-classes-per-file": "off"
+  },
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/node_modules/**"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/http-client.ts"
+      ],
+      "rules": {
+        "no-await-in-loop": "off"
+      }
+    },
+    {
+      "files": [
+        "**/tests/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/e2e/**"
+      ],
+      "rules": {
+        "typescript/no-explicit-any": "off",
+        "no-console": "off",
+        "max-lines-per-function": "off",
+        "require-await": "off"
+      }
+    }
+  ]
+}

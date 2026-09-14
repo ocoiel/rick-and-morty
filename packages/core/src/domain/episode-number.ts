@@ -1,40 +1,37 @@
 import { InvalidEpisodeNumberError } from './errors.js';
 
-/**
- * Value Object que representa o número de um episódio.
- *
- * Existe para que a validação aconteça uma única vez, na fronteira do domínio.
- * Depois que um EpisodeNumber é construído, nenhuma camada precisa perguntar
- * de novo se o valor é um inteiro positivo — o tipo já garante isso.
- */
+function parsePositiveInteger(input: unknown): number | null {
+  if (typeof input === 'number') {
+    return Number.isSafeInteger(input) && input >= 1 ? input : null;
+  }
+
+  if (typeof input === 'string') {
+    const trimmed = input.trim();
+    if (trimmed === '') return null;
+
+    const parsed = Number(trimmed);
+    return Number.isSafeInteger(parsed) && parsed >= 1 ? parsed : null;
+  }
+
+  return null;
+}
+
 export class EpisodeNumber {
   private constructor(readonly value: number) {}
 
-  /**
-   * @throws {InvalidEpisodeNumberError} quando o valor não é um inteiro positivo.
-   */
   static create(input: unknown): EpisodeNumber {
-    const parsed = typeof input === 'string' ? Number(input.trim()) : input;
+    const parsed = parsePositiveInteger(input);
 
-    if (
-      typeof parsed !== 'number' ||
-      !Number.isInteger(parsed) ||
-      parsed < 1 ||
-      !Number.isSafeInteger(parsed)
-    ) {
+    if (parsed === null) {
       throw new InvalidEpisodeNumberError(input);
     }
 
     return new EpisodeNumber(parsed);
   }
 
-  /** Variante não-lançante, para fronteiras onde o erro é fluxo esperado. */
   static safeCreate(input: unknown): EpisodeNumber | null {
-    try {
-      return EpisodeNumber.create(input);
-    } catch {
-      return null;
-    }
+    const parsed = parsePositiveInteger(input);
+    return parsed === null ? null : new EpisodeNumber(parsed);
   }
 
   equals(other: EpisodeNumber): boolean {
