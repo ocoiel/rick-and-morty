@@ -33,7 +33,7 @@ export async function buildServer({
 
   registerErrorHandler(app);
 
-  app.get('/health', async (_request, reply) =>
+  app.get('/health', (_request, reply) =>
     reply.header('cache-control', 'no-store').send({ status: 'ok', uptime: process.uptime() }),
   );
 
