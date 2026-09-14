@@ -1,5 +1,9 @@
-import { GetEpisodeCastUseCase, ListEpisodeNumbersUseCase } from './application/index.js';
-import type { CacheStore, EpisodeGateway } from './application/ports/index.js';
+import {
+  GetCharacterAppearancesUseCase,
+  GetEpisodeCastUseCase,
+  ListEpisodeNumbersUseCase,
+} from './application/index.js';
+import type { CacheStore, CharacterGateway, EpisodeGateway } from './application/ports/index.js';
 import { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.js';
 import { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.js';
 import { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-gateway.js';
@@ -8,29 +12,35 @@ export interface ContainerConfig {
   readonly apiBaseUrl?: string;
   readonly timeoutMs?: number;
   readonly retries?: number;
+  readonly maxConcurrency?: number;
+  readonly backoffBaseMs?: number;
   readonly cacheEnabled?: boolean;
   readonly cacheMaxEntries?: number;
   readonly fetchFn?: typeof fetch;
   readonly episodeGateway?: EpisodeGateway;
+  readonly characterGateway?: CharacterGateway;
   readonly cacheStore?: CacheStore;
 }
 
 export interface Container {
   readonly getEpisodeCast: GetEpisodeCastUseCase;
   readonly listEpisodeNumbers: ListEpisodeNumbersUseCase;
+  readonly getCharacterAppearances: GetCharacterAppearancesUseCase;
   readonly episodeGateway: EpisodeGateway;
+  readonly characterGateway: CharacterGateway;
   readonly cacheStore: CacheStore;
 }
 
 export function createContainer(config: ContainerConfig = {}): Container {
-  const episodeGateway =
-    config.episodeGateway ??
-    new RickAndMortyHttpGateway({
-      ...(config.apiBaseUrl !== undefined && { baseUrl: config.apiBaseUrl }),
-      ...(config.timeoutMs !== undefined && { timeoutMs: config.timeoutMs }),
-      ...(config.retries !== undefined && { retries: config.retries }),
-      ...(config.fetchFn !== undefined && { fetchFn: config.fetchFn }),
-    });
+  const httpGateway = new RickAndMortyHttpGateway({
+    ...(config.apiBaseUrl !== undefined && { baseUrl: config.apiBaseUrl }),
+    ...(config.timeoutMs !== undefined && { timeoutMs: config.timeoutMs }),
+    ...(config.retries !== undefined && { retries: config.retries }),
+    ...(config.fetchFn !== undefined && { fetchFn: config.fetchFn }),
+  });
+
+  const episodeGateway = config.episodeGateway ?? httpGateway;
+  const characterGateway = config.characterGateway ?? httpGateway;
 
   const cacheStore =
     config.cacheStore ??
@@ -42,8 +52,10 @@ export function createContainer(config: ContainerConfig = {}): Container {
 
   return {
     episodeGateway,
+    characterGateway,
     cacheStore,
     getEpisodeCast: new GetEpisodeCastUseCase(episodeGateway, cacheStore),
+    getCharacterAppearances: new GetCharacterAppearancesUseCase(characterGateway, cacheStore),
     listEpisodeNumbers: new ListEpisodeNumbersUseCase(episodeGateway),
   };
 }

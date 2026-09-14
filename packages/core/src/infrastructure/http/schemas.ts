@@ -15,10 +15,7 @@ export const characterDtoSchema = z.object({
   image: z.string(),
 });
 
-export const charactersResponseSchema = z.union([
-  characterDtoSchema,
-  z.array(characterDtoSchema),
-]);
+export const charactersResponseSchema = z.union([characterDtoSchema, z.array(characterDtoSchema)]);
 
 export const episodeDtoSchema = z.object({
   id: z.number().int().positive(),
@@ -27,6 +24,22 @@ export const episodeDtoSchema = z.object({
   episode: z.string(),
   characters: z.array(z.string()),
 });
+
+export const characterEpisodesSchema = z.object({
+  id: z.number().int().positive(),
+  episode: z.array(z.string()),
+});
+
+export const episodeSummarySchema = z.object({
+  id: z.number().int().positive(),
+  name: z.string(),
+  episode: z.string(),
+});
+
+export const episodeSummaryResponseSchema = z.union([
+  episodeSummarySchema,
+  z.array(episodeSummarySchema),
+]);
 
 export const episodeIndexSchema = z.object({
   info: z.object({ count: z.number().int().nonnegative() }),

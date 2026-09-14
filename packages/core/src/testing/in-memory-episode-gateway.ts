@@ -1,14 +1,24 @@
 import type { Character, EpisodeNumber } from '../domain/index.js';
 import { EpisodeNotFoundError } from '../domain/index.js';
-import type { EpisodeGateway, EpisodeRecord } from '../application/ports/index.js';
+import type {
+  CharacterGateway,
+  EpisodeAppearance,
+  EpisodeGateway,
+  EpisodeRecord,
+} from '../application/ports/index.js';
 
 export interface InMemoryEpisodeGatewaySeed {
   readonly episodes: readonly EpisodeRecord[];
   readonly characters: readonly Character[];
 }
 
-export class InMemoryEpisodeGateway implements EpisodeGateway {
-  readonly calls = { findEpisode: 0, findCharactersByIds: 0, listEpisodeNumbers: 0 };
+export class InMemoryEpisodeGateway implements EpisodeGateway, CharacterGateway {
+  readonly calls = {
+    findEpisode: 0,
+    findCharactersByIds: 0,
+    listEpisodeNumbers: 0,
+    findCharacterAppearances: 0,
+  };
 
   private readonly episodes: Map<number, EpisodeRecord>;
   private readonly characters: Map<number, Character>;
@@ -37,6 +47,16 @@ export class InMemoryEpisodeGateway implements EpisodeGateway {
       .filter((character): character is Character => character !== undefined);
 
     return Promise.resolve(found);
+  }
+
+  findCharacterAppearances(characterId: number): Promise<readonly EpisodeAppearance[]> {
+    this.calls.findCharacterAppearances += 1;
+
+    const appearances = [...this.episodes.values()]
+      .filter((episode) => episode.characterIds.includes(characterId))
+      .map((episode) => ({ number: episode.number, code: episode.code, name: episode.name }));
+
+    return Promise.resolve(appearances);
   }
 
   listEpisodeNumbers(): Promise<readonly number[]> {

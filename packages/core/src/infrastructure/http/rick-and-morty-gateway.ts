@@ -1,11 +1,18 @@
 import type { Character, EpisodeNumber } from '../../domain/index.js';
 import { EpisodeNotFoundError, UpstreamUnavailableError } from '../../domain/index.js';
-import type { EpisodeGateway, EpisodeRecord } from '../../application/ports/index.js';
+import type {
+  CharacterGateway,
+  EpisodeAppearance,
+  EpisodeGateway,
+  EpisodeRecord,
+} from '../../application/ports/index.js';
 import { HttpClient } from './http-client.js';
 import {
   charactersResponseSchema,
+  characterEpisodesSchema,
   episodeDtoSchema,
   episodeIndexSchema,
+  episodeSummaryResponseSchema,
   type CharacterDto,
 } from './schemas.js';
 
@@ -14,12 +21,14 @@ export interface RickAndMortyGatewayOptions {
   readonly timeoutMs?: number;
   readonly retries?: number;
   readonly fetchFn?: typeof fetch;
+  readonly maxConcurrency?: number;
+  readonly backoffBaseMs?: number;
 }
 
 const DEFAULT_BASE_URL = 'https://rickandmortyapi.com/api';
 const CHARACTER_BATCH_SIZE = 100;
 
-function characterIdFromUrl(url: string): number | null {
+function idFromUrl(url: string): number | null {
   const id = Number(url.split('/').pop());
   return Number.isSafeInteger(id) && id > 0 ? id : null;
 }
@@ -45,15 +54,17 @@ function chunk<T>(items: readonly T[], size: number): T[][] {
   return chunks;
 }
 
-export class RickAndMortyHttpGateway implements EpisodeGateway {
+export class RickAndMortyHttpGateway implements EpisodeGateway, CharacterGateway {
   private readonly http: HttpClient;
 
   constructor(options: RickAndMortyGatewayOptions = {}) {
     this.http = new HttpClient({
       baseUrl: options.baseUrl ?? DEFAULT_BASE_URL,
       timeoutMs: options.timeoutMs ?? 5000,
-      retries: options.retries ?? 2,
+      retries: options.retries ?? 4,
       fetchFn: options.fetchFn ?? globalThis.fetch,
+      ...(options.maxConcurrency !== undefined && { maxConcurrency: options.maxConcurrency }),
+      ...(options.backoffBaseMs !== undefined && { backoffBaseMs: options.backoffBaseMs }),
     });
   }
 
@@ -78,7 +89,7 @@ export class RickAndMortyHttpGateway implements EpisodeGateway {
       code: parsed.data.episode,
       airDate: parsed.data.air_date,
       characterIds: parsed.data.characters
-        .map((url) => characterIdFromUrl(url))
+        .map((url) => idFromUrl(url))
         .filter((id): id is number => id !== null),
     };
   }
@@ -104,6 +115,45 @@ export class RickAndMortyHttpGateway implements EpisodeGateway {
     }
 
     return Array.from({ length: parsed.data.info.count }, (_, index) => index + 1);
+  }
+
+  async findCharacterAppearances(characterId: number): Promise<readonly EpisodeAppearance[]> {
+    const character = await this.http.get(`/character/${characterId}`);
+
+    if (character.status === 404) return [];
+
+    const parsedCharacter = characterEpisodesSchema.safeParse(character.body);
+    if (!parsedCharacter.success) {
+      throw new UpstreamUnavailableError(
+        `Resposta inesperada da origem para o personagem ${characterId}.`,
+        { cause: parsedCharacter.error },
+      );
+    }
+
+    const episodeIds = parsedCharacter.data.episode
+      .map((url) => idFromUrl(url))
+      .filter((id): id is number => id !== null);
+
+    if (episodeIds.length === 0) return [];
+
+    const episodes = await this.http.get(`/episode/${episodeIds.join(',')}`);
+    const parsedEpisodes = episodeSummaryResponseSchema.safeParse(episodes.body);
+
+    if (!parsedEpisodes.success) {
+      throw new UpstreamUnavailableError('Resposta inesperada da origem para episódios.', {
+        cause: parsedEpisodes.error,
+      });
+    }
+
+    const summaries = Array.isArray(parsedEpisodes.data)
+      ? parsedEpisodes.data
+      : [parsedEpisodes.data];
+
+    return summaries.map((summary) => ({
+      number: summary.id,
+      code: summary.episode,
+      name: summary.name,
+    }));
   }
 
   private async fetchCharacterBatch(ids: readonly number[]): Promise<Character[]> {
