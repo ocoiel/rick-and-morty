@@ -7,7 +7,7 @@ export const config = {
 
 const EPISODE_PATH = /^\/episode\/([^/]+)\/?$/u;
 
-export function middleware(request: NextRequest): NextResponse {
+export function proxy(request: NextRequest): NextResponse {
   const match = EPISODE_PATH.exec(request.nextUrl.pathname);
 
   if (!match) return NextResponse.next();
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest): NextResponse {
 
   if (isKnownEpisode) return NextResponse.next();
 
-  return NextResponse.rewrite(new URL('/episode-nao-encontrado', request.url), { status: 404 });
+  return NextResponse.rewrite(new URL('/episode-nao-encontrado', request.url));
 }
