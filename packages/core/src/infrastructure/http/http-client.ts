@@ -1,5 +1,5 @@
-import { UpstreamUnavailableError } from '../../domain/index.js';
-import { Semaphore } from './semaphore.js';
+import { UpstreamUnavailableError } from '../../domain/index.ts';
+import { Semaphore } from './semaphore.ts';
 
 export interface HttpClientOptions {
   readonly baseUrl: string;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { InMemoryCacheStore } from '../src/index.js';
+import { InMemoryCacheStore } from '../src/index.ts';
 
 describe('InMemoryCacheStore', () => {
   it('devolve undefined para chave ausente', async () => {

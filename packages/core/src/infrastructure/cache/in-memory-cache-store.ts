@@ -1,4 +1,4 @@
-import type { CacheStore } from '../../application/ports/index.js';
+import type { CacheStore } from '../../application/ports/index.ts';
 
 interface CacheEntry {
   readonly value: unknown;

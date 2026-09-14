@@ -1,4 +1,4 @@
-import type { EpisodeGateway } from '../ports/index.js';
+import type { EpisodeGateway } from '../ports/index.ts';
 
 export class ListEpisodeNumbersUseCase {
   constructor(private readonly episodes: EpisodeGateway) {}

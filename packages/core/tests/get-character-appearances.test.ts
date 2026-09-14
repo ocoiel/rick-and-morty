@@ -3,8 +3,8 @@ import {
   GetCharacterAppearancesUseCase,
   InMemoryCacheStore,
   InvalidEpisodeNumberError,
-} from '../src/index.js';
-import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.js';
+} from '../src/index.ts';
+import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.ts';
 
 describe('GetCharacterAppearancesUseCase', () => {
   let gateway: InMemoryEpisodeGateway;

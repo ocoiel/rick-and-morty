@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { DomainError, type EpisodeGateway } from '@zrp/core';
 import { createContainer, InMemoryCacheStore } from '@zrp/core';
-import { loadConfig } from '../src/config.js';
-import { buildServer } from '../src/server.js';
+import { loadConfig } from '../src/config.ts';
+import { buildServer } from '../src/server.ts';
 
 let app: FastifyInstance;
 

@@ -1,7 +1,7 @@
 import { createContainer, InMemoryCacheStore, type EpisodeGateway } from '@zrp/core';
 import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '@zrp/core/testing';
-import { loadConfig } from '../src/config.js';
-import { buildServer } from '../src/server.js';
+import { loadConfig } from '../src/config.ts';
+import { buildServer } from '../src/server.ts';
 
 export function buildFakeGateway(): InMemoryEpisodeGateway {
   return new InMemoryEpisodeGateway({

@@ -1,4 +1,4 @@
-import type { Character, EpisodeNumber } from '../../domain/index.js';
+import type { Character, EpisodeNumber } from '../../domain/index.ts';
 
 export interface EpisodeRecord {
   readonly number: number;

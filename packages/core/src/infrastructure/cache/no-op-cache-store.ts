@@ -1,4 +1,4 @@
-import type { CacheStore } from '../../application/ports/index.js';
+import type { CacheStore } from '../../application/ports/index.ts';
 
 export class NoOpCacheStore implements CacheStore {
   get<T>(_key: string): Promise<T | undefined> {

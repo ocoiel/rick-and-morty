@@ -1,10 +1,10 @@
-export type { Character, CharacterStatus } from './character.js';
-export { EpisodeCast } from './episode-cast.js';
-export type { EpisodeIdentity } from './episode-cast.js';
-export { EpisodeNumber } from './episode-number.js';
+export type { Character, CharacterStatus } from './character.ts';
+export { EpisodeCast } from './episode-cast.ts';
+export type { EpisodeIdentity } from './episode-cast.ts';
+export { EpisodeNumber } from './episode-number.ts';
 export {
   DomainError,
   EpisodeNotFoundError,
   InvalidEpisodeNumberError,
   UpstreamUnavailableError,
-} from './errors.js';
+} from './errors.ts';

@@ -1,5 +1,5 @@
-import type { Character } from './character.js';
-import type { EpisodeNumber } from './episode-number.js';
+import type { Character } from './character.ts';
+import type { EpisodeNumber } from './episode-number.ts';
 
 export interface EpisodeIdentity {
   readonly number: EpisodeNumber;

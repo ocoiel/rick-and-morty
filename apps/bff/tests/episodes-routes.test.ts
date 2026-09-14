@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { EpisodeNotFoundError, UpstreamUnavailableError, type EpisodeGateway } from '@zrp/core';
-import { buildTestServer } from './helpers.js';
+import { buildTestServer } from './helpers.ts';
 
 let app: FastifyInstance;
 

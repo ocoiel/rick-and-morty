@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadConfig } from '../src/config.js';
+import { loadConfig } from '../src/config.ts';
 
 describe('loadConfig', () => {
   it('aplica padrões seguros quando o ambiente está vazio', () => {
@@ -28,6 +28,8 @@ describe('loadConfig', () => {
 
   it('rejeita configuração inválida em vez de subir com valor silenciosamente errado', () => {
     expect(() => loadConfig({ PORT: 'não é porta' } as NodeJS.ProcessEnv)).toThrow();
-    expect(() => loadConfig({ RICK_AND_MORTY_API_URL: 'não-é-url' } as NodeJS.ProcessEnv)).toThrow();
+    expect(() =>
+      loadConfig({ RICK_AND_MORTY_API_URL: 'não-é-url' } as NodeJS.ProcessEnv),
+    ).toThrow();
   });
 });

@@ -5,8 +5,8 @@ import {
   InMemoryCacheStore,
   NoOpCacheStore,
   RickAndMortyHttpGateway,
-} from '../src/index.js';
-import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.js';
+} from '../src/index.ts';
+import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.ts';
 
 function buildFakeGateway() {
   return new InMemoryEpisodeGateway({
