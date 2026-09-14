@@ -4,5 +4,7 @@ export { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-ga
 export type { RickAndMortyGatewayOptions } from './infrastructure/http/rick-and-morty-gateway.js';
 export { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.js';
 export { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.js';
+export { SnapshotGateway } from './infrastructure/snapshot/catalog-snapshot.js';
+export type { CatalogSnapshot } from './infrastructure/snapshot/catalog-snapshot.js';
 export { createContainer } from './composition-root.js';
 export type { Container, ContainerConfig } from './composition-root.js';

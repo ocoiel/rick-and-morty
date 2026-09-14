@@ -57,7 +57,7 @@ describe('createContainer', () => {
   it('repassa a configuração de rede para o gateway HTTP', async () => {
     const fetchFn = vi.fn(
       async () =>
-        new Response(JSON.stringify({ info: { count: 2 } }), {
+        new Response(JSON.stringify({ info: { count: 2, pages: 1 } }), {
           status: 200,
           headers: { 'content-type': 'application/json' },
         }),

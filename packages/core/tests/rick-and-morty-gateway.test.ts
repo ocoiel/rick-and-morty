@@ -194,7 +194,9 @@ describe('RickAndMortyHttpGateway', () => {
 
   describe('listEpisodeNumbers', () => {
     it('deriva a lista completa a partir da contagem da origem', async () => {
-      const fetchFn = vi.fn(async () => jsonResponse({ info: { count: 3 }, results: [] }));
+      const fetchFn = vi.fn(async () =>
+        jsonResponse({ info: { count: 3, pages: 1 }, results: [] }),
+      );
       const gateway = buildGateway(fetchFn as unknown as typeof fetch);
 
       await expect(gateway.listEpisodeNumbers()).resolves.toEqual([1, 2, 3]);
@@ -218,7 +220,7 @@ describe('RickAndMortyHttpGateway — bordas de protocolo', () => {
   });
 
   it('rejeita índice de episódios fora do contrato', async () => {
-    const fetchFn = vi.fn(async () => jsonResponse({ info: {} }));
+    const fetchFn = vi.fn(async () => jsonResponse({ info: { count: 3 } }));
     const gateway = buildGateway(fetchFn as unknown as typeof fetch);
 
     await expect(gateway.listEpisodeNumbers()).rejects.toThrow(UpstreamUnavailableError);
@@ -236,5 +238,40 @@ describe('RickAndMortyHttpGateway — bordas de protocolo', () => {
 
   it('usa a URL pública da origem quando nenhuma base é configurada', () => {
     expect(() => new RickAndMortyHttpGateway()).not.toThrow();
+  });
+});
+
+describe('RickAndMortyHttpGateway — catálogo completo', () => {
+  function episodePage(pages: number, ids: number[]) {
+    return jsonResponse({
+      info: { pages },
+      results: ids.map((id) => ({
+        id,
+        name: `Episódio ${id}`,
+        air_date: 'December 2, 2013',
+        episode: `S01E0${id}`,
+        characters: [`https://api.test/api/character/${id}`],
+      })),
+    });
+  }
+
+  it('percorre todas as páginas da origem', async () => {
+    const fetchFn = vi.fn(async (url: string) =>
+      url.includes('page=1') ? episodePage(2, [1, 2]) : episodePage(2, [3]),
+    );
+    const gateway = buildGateway(fetchFn as unknown as typeof fetch);
+
+    const episodes = await gateway.listEpisodes();
+
+    expect(fetchFn).toHaveBeenCalledTimes(2);
+    expect(episodes.map((episode) => episode.number)).toEqual([1, 2, 3]);
+    expect(episodes[0]?.characterIds).toEqual([1]);
+  });
+
+  it('rejeita página fora do contrato', async () => {
+    const fetchFn = vi.fn(async () => jsonResponse({ info: { pages: 1 }, results: [{ id: 'x' }] }));
+    const gateway = buildGateway(fetchFn as unknown as typeof fetch);
+
+    await expect(gateway.listEpisodes()).rejects.toThrow(UpstreamUnavailableError);
   });
 });
