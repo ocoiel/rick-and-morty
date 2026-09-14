@@ -6,8 +6,8 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "dev": "node --watch --experimental-strip-types src/main.ts",
-    "start": "node dist/main.js",
+    "dev": "node --watch --env-file-if-exists=.env --experimental-strip-types src/main.ts",
+    "start": "node --env-file-if-exists=.env dist/main.js",
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",

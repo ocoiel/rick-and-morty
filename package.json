@@ -8,15 +8,14 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "verify": "turbo run lint typecheck test build test:e2e",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "test:e2e": "turbo run test:e2e",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md,yml}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,yml}\"",
-    "docker:up": "docker compose up --build",
-    "docker:down": "docker compose down -v"
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,yml}\""
   },
   "devDependencies": {
     "prettier": "^3.6.2",
