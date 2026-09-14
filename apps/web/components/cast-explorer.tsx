@@ -86,7 +86,9 @@ export function CastExplorer({ characters }: CastExplorerProps) {
         </ul>
       )}
 
-      <CharacterDetailSheet character={selected} onClose={() => setSelected(null)} />
+      {selected !== null && (
+        <CharacterDetailSheet character={selected} onClose={() => setSelected(null)} />
+      )}
     </>
   );
 }

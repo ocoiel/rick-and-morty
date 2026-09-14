@@ -33,21 +33,16 @@ function DetailRow({ label, value }: { label: string; value: string }) {
 }
 
 export interface CharacterDetailSheetProps {
-  readonly character: Character | null;
+  readonly character: Character;
   readonly onClose: () => void;
 }
 
 export function CharacterDetailSheet({ character, onClose }: CharacterDetailSheetProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const { data, isPending, isError } = useQuery({
-    ...characterEpisodesQuery(character?.id ?? 0),
-    enabled: character !== null,
-  });
+  const { data, isPending, isError } = useQuery(characterEpisodesQuery(character.id));
 
   useEffect(() => {
-    if (!character) return;
-
     closeRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -56,9 +51,7 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [character, onClose]);
-
-  if (!character) return null;
+  }, [onClose]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
@@ -129,7 +122,10 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
             <ul className="flex flex-wrap gap-1.5">
               {data.episodes.map((episode) => (
                 <li key={episode.number}>
-                  <span className="inline-block rounded-md border border-border bg-surface-raised px-2 py-1 text-xs text-ink-muted">
+                  <span
+                    data-testid="appearance"
+                    className="inline-block rounded-md border border-border bg-surface-raised px-2 py-1 text-xs text-ink-muted"
+                  >
                     {episode.code}
                   </span>
                 </li>
