@@ -79,7 +79,10 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
             className="rounded-xl border border-border"
           />
           <div className="min-w-0 flex-1">
-            <h2 id="detalhe-nome" className="text-balance text-lg font-bold leading-tight">
+            <h2
+              id="detalhe-nome"
+              className="text-balance font-display text-lg font-bold leading-tight tracking-[-0.02em]"
+            >
               {character.name}
             </h2>
             <div className="mt-1.5">

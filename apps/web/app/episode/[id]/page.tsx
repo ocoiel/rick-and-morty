@@ -67,7 +67,7 @@ async function EpisodeCast({ params }: EpisodePageProps) {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-portal">
             {cast.episode.code}
           </p>
-          <h1 className="mt-1 text-balance text-3xl font-bold leading-tight sm:text-4xl">
+          <h1 className="mt-1 text-balance font-display text-3xl font-bold leading-tight tracking-[-0.03em] sm:text-4xl">
             {cast.episode.name}
           </h1>
           <p className="mt-2 text-sm text-ink-muted">Exibido em {cast.episode.airDate}</p>
