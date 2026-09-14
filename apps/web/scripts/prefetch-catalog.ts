@@ -1,5 +1,7 @@
 import { writeFile } from 'node:fs/promises';
-import { RickAndMortyHttpGateway, type CatalogSnapshot } from '@zrp/core';
+import { RickAndMortyHttpGateway } from '@zrp/core';
+
+import type { CatalogSnapshot } from '@zrp/core';
 
 const SNAPSHOT_PATH = new URL('../lib/catalog-snapshot.json', import.meta.url);
 const TOTAL_PATH = new URL('../lib/episode-catalog.ts', import.meta.url);

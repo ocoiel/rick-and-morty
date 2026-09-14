@@ -1,11 +1,12 @@
-import type { Character, EpisodeNumber } from '../../domain/index.js';
 import { EpisodeNotFoundError } from '../../domain/index.js';
+
 import type {
   CharacterGateway,
   EpisodeAppearance,
   EpisodeGateway,
   EpisodeRecord,
 } from '../../application/ports/index.js';
+import type { Character, EpisodeNumber } from '../../domain/index.js';
 
 export interface CatalogSnapshot {
   readonly generatedAt: string;

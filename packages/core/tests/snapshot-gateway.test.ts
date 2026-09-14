@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { EpisodeNotFoundError, EpisodeNumber, SnapshotGateway } from '../src/index.js';
-import type { CatalogSnapshot } from '../src/index.js';
 import { makeCharacter, makeEpisodeRecord } from '../src/testing/index.js';
+
+import type { CatalogSnapshot } from '../src/index.js';
 
 const snapshot: CatalogSnapshot = {
   generatedAt: '2026-09-14T00:00:00.000Z',
