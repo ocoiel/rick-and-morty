@@ -1,5 +1,6 @@
-import { InvalidEpisodeNumberError } from '../../domain/index.js';
-import type { CacheStore, CharacterGateway, EpisodeAppearance } from '../ports/index.js';
+import { ONE_DAY_MS } from '../../cache-policy.ts';
+import { InvalidEpisodeNumberError } from '../../domain/index.ts';
+import type { CacheStore, CharacterGateway, EpisodeAppearance } from '../ports/index.ts';
 
 export interface GetCharacterAppearancesInput {
   readonly characterId: unknown;
@@ -9,8 +10,6 @@ export interface CharacterAppearancesPayload {
   readonly characterId: number;
   readonly episodes: readonly EpisodeAppearance[];
 }
-
-export const APPEARANCES_TTL_MS = 24 * 60 * 60 * 1000;
 
 function parseCharacterId(input: unknown): number {
   const parsed = typeof input === 'string' ? Number(input.trim()) : input;
@@ -38,7 +37,7 @@ export class GetCharacterAppearancesUseCase {
     const episodes = await this.characters.findCharacterAppearances(characterId);
     const payload: CharacterAppearancesPayload = { characterId, episodes };
 
-    await this.cache.set(cacheKey, payload, APPEARANCES_TTL_MS);
+    await this.cache.set(cacheKey, payload, ONE_DAY_MS);
 
     return payload;
   }

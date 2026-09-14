@@ -1,12 +1,12 @@
-import type { Character, EpisodeNumber } from '../../domain/index.js';
-import { EpisodeNotFoundError, UpstreamUnavailableError } from '../../domain/index.js';
+import type { Character, EpisodeNumber } from '../../domain/index.ts';
+import { EpisodeNotFoundError, UpstreamUnavailableError } from '../../domain/index.ts';
 import type {
   CharacterGateway,
   EpisodeAppearance,
   EpisodeGateway,
   EpisodeRecord,
-} from '../../application/ports/index.js';
-import { HttpClient } from './http-client.js';
+} from '../../application/ports/index.ts';
+import { HttpClient } from './http-client.ts';
 import {
   charactersResponseSchema,
   characterEpisodesSchema,
@@ -14,7 +14,7 @@ import {
   episodeIndexSchema,
   episodeSummaryResponseSchema,
   type CharacterDto,
-} from './schemas.js';
+} from './schemas.ts';
 
 export interface RickAndMortyGatewayOptions {
   readonly baseUrl?: string;
@@ -25,7 +25,11 @@ export interface RickAndMortyGatewayOptions {
   readonly backoffBaseMs?: number;
 }
 
-const DEFAULT_BASE_URL = 'https://rickandmortyapi.com/api';
+export const DEFAULT_API_BASE_URL = 'https://rickandmortyapi.com/api';
+export const DEFAULT_UPSTREAM_TIMEOUT_MS = 5000;
+export const DEFAULT_UPSTREAM_RETRIES = 3;
+
+/** A origem aceita vários ids por requisição; 100 é o teto documentado. */
 const CHARACTER_BATCH_SIZE = 100;
 
 function idFromUrl(url: string): number | null {
@@ -59,9 +63,9 @@ export class RickAndMortyHttpGateway implements EpisodeGateway, CharacterGateway
 
   constructor(options: RickAndMortyGatewayOptions = {}) {
     this.http = new HttpClient({
-      baseUrl: options.baseUrl ?? DEFAULT_BASE_URL,
-      timeoutMs: options.timeoutMs ?? 5000,
-      retries: options.retries ?? 5,
+      baseUrl: options.baseUrl ?? DEFAULT_API_BASE_URL,
+      timeoutMs: options.timeoutMs ?? DEFAULT_UPSTREAM_TIMEOUT_MS,
+      retries: options.retries ?? DEFAULT_UPSTREAM_RETRIES,
       fetchFn: options.fetchFn ?? globalThis.fetch,
       ...(options.maxConcurrency !== undefined && { maxConcurrency: options.maxConcurrency }),
       ...(options.backoffBaseMs !== undefined && { backoffBaseMs: options.backoffBaseMs }),
