@@ -1,5 +1,6 @@
 import { ONE_DAY_MS } from '../../cache-policy.ts';
 import { InvalidEpisodeNumberError } from '../../domain/index.ts';
+
 import type { CacheStore, CharacterGateway, EpisodeAppearance } from '../ports/index.ts';
 
 export interface GetCharacterAppearancesInput {

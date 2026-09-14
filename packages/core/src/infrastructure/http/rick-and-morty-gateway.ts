@@ -1,20 +1,21 @@
-import type { Character, EpisodeNumber } from '../../domain/index.ts';
 import { EpisodeNotFoundError, UpstreamUnavailableError } from '../../domain/index.ts';
+import { HttpClient } from './http-client.ts';
+import {
+  characterEpisodesSchema,
+  charactersResponseSchema,
+  episodeDtoSchema,
+  episodeIndexSchema,
+  episodeSummaryResponseSchema,
+} from './schemas.ts';
+
 import type {
   CharacterGateway,
   EpisodeAppearance,
   EpisodeGateway,
   EpisodeRecord,
 } from '../../application/ports/index.ts';
-import { HttpClient } from './http-client.ts';
-import {
-  charactersResponseSchema,
-  characterEpisodesSchema,
-  episodeDtoSchema,
-  episodeIndexSchema,
-  episodeSummaryResponseSchema,
-  type CharacterDto,
-} from './schemas.ts';
+import type { Character, EpisodeNumber } from '../../domain/index.ts';
+import type { CharacterDto } from './schemas.ts';
 
 export interface RickAndMortyGatewayOptions {
   readonly baseUrl?: string;

@@ -30,3 +30,4 @@ minimumReleaseAgeExclude:
   - oxlint@1.83.0
   - turbo@2.10.13
   - zod@4.6.5
+  - '@shadcn/lint@0.1.0'

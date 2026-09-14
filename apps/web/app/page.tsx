@@ -31,7 +31,7 @@ export default function HomePage() {
           Rick and Morty
         </p>
 
-        <h1 className="text-balance text-4xl font-bold leading-[1.1] sm:text-5xl">
+        <h1 className="text-balance font-display text-4xl font-bold leading-[1.1] tracking-[-0.03em] sm:text-5xl">
           Quem aparece em cada episódio
         </h1>
 

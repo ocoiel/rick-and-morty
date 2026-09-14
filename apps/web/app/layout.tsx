@@ -1,7 +1,15 @@
-import type { Metadata, Viewport } from 'next';
-import { Space_Grotesk } from 'next/font/google';
+import { Geist, Space_Grotesk } from 'next/font/google';
 import { Providers } from '@/components/providers';
+
+import type { Metadata, Viewport } from 'next';
+
 import './globals.css';
+
+const sans = Geist({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-geist',
+});
 
 const display = Space_Grotesk({
   subsets: ['latin'],
@@ -30,8 +38,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={display.variable} suppressHydrationWarning>
-      <body className="min-h-dvh font-sans antialiased">
+    <html lang="pt-BR" className={`${sans.variable} ${display.variable}`} suppressHydrationWarning>
+      <body className="min-h-dvh antialiased">
         <a
           href="#conteudo"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-portal focus:px-4 focus:py-2 focus:font-medium focus:text-void"

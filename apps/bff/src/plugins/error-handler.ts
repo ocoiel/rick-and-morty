@@ -1,10 +1,11 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import {
   DomainError,
   EpisodeNotFoundError,
   InvalidEpisodeNumberError,
   UpstreamUnavailableError,
 } from '@zrp/core';
+
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 export interface ErrorBody {
   readonly error: { readonly code: string; readonly message: string };

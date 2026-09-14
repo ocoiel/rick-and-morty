@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import { CastExplorer } from '@/components/cast-explorer';
 import { EpisodeNav } from '@/components/episode-nav';
 import { EpisodeSearchForm } from '@/components/episode-search-form';
 import { getEpisodeCast, listEpisodeNumbers } from '@/lib/episodes';
+
+import type { Metadata } from 'next';
 
 interface EpisodePageProps {
   readonly params: Promise<{ readonly id: string }>;
@@ -66,7 +67,7 @@ async function EpisodeCast({ params }: EpisodePageProps) {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-portal">
             {cast.episode.code}
           </p>
-          <h1 className="mt-1 text-balance text-3xl font-bold leading-tight sm:text-4xl">
+          <h1 className="mt-1 text-balance font-display text-3xl font-bold leading-tight tracking-[-0.03em] sm:text-4xl">
             {cast.episode.name}
           </h1>
           <p className="mt-2 text-sm text-ink-muted">Exibido em {cast.episode.airDate}</p>

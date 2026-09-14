@@ -1,9 +1,9 @@
+import { z } from 'zod';
 import {
   DEFAULT_API_BASE_URL,
   DEFAULT_UPSTREAM_RETRIES,
   DEFAULT_UPSTREAM_TIMEOUT_MS,
 } from '@zrp/core';
-import { z } from 'zod';
 
 const configSchema = z.object({
   host: z.string().default('0.0.0.0'),

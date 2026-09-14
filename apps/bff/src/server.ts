@@ -1,10 +1,13 @@
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
-import Fastify, { type FastifyInstance } from 'fastify';
-import { createContainer, type Container } from '@zrp/core';
-import type { AppConfig } from './config.ts';
+import Fastify from 'fastify';
+import { createContainer } from '@zrp/core';
 import { registerErrorHandler } from './plugins/error-handler.ts';
 import { createEpisodeRoutes } from './routes/episodes.ts';
+
+import type { FastifyInstance } from 'fastify';
+import type { Container } from '@zrp/core';
+import type { AppConfig } from './config.ts';
 
 export interface BuildServerOptions {
   readonly config: AppConfig;

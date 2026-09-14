@@ -3,10 +3,11 @@ import {
   GetEpisodeCastUseCase,
   ListEpisodeNumbersUseCase,
 } from './application/index.ts';
-import type { CacheStore, CharacterGateway, EpisodeGateway } from './application/ports/index.ts';
 import { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.ts';
 import { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.ts';
 import { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-gateway.ts';
+
+import type { CacheStore, CharacterGateway, EpisodeGateway } from './application/ports/index.ts';
 
 export interface ContainerConfig {
   readonly apiBaseUrl?: string;

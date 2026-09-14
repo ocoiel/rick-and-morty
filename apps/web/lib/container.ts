@@ -1,9 +1,6 @@
-import {
-  createContainer,
-  DEFAULT_UPSTREAM_RETRIES,
-  DEFAULT_UPSTREAM_TIMEOUT_MS,
-  type Container,
-} from '@zrp/core';
+import { createContainer, DEFAULT_UPSTREAM_RETRIES, DEFAULT_UPSTREAM_TIMEOUT_MS } from '@zrp/core';
+
+import type { Container } from '@zrp/core';
 
 const CONTAINER_KEY = Symbol.for('zrp.container');
 

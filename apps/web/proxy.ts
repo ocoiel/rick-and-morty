@@ -1,5 +1,7 @@
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { TOTAL_EPISODES } from '@/lib/episode-catalog';
+
+import type { NextRequest } from 'next/server';
 
 export const config = {
   matcher: '/episode/:path*',
