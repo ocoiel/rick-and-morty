@@ -84,6 +84,7 @@ export function EpisodeSearchForm({
 
       <p
         id={errorId}
+        data-testid="search-error"
         role="alert"
         aria-live="polite"
         className={`mt-2 text-sm text-plumbus transition-opacity ${error ? 'opacity-100' : 'opacity-0'}`}
