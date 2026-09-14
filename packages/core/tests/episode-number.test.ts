@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { EpisodeNumber, InvalidEpisodeNumberError } from '../src/domain/index.js';
+import { EpisodeNumber, InvalidEpisodeNumberError } from '../src/domain/index.ts';
 
 describe('EpisodeNumber', () => {
   it.each([

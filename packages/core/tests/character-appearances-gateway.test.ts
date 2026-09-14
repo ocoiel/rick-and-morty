@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { RickAndMortyHttpGateway, UpstreamUnavailableError } from '../src/index.js';
+import { RickAndMortyHttpGateway, UpstreamUnavailableError } from '../src/index.ts';
 
 const BASE_URL = 'https://api.test/api';
 

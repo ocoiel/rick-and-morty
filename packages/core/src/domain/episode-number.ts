@@ -1,4 +1,4 @@
-import { InvalidEpisodeNumberError } from './errors.js';
+import { InvalidEpisodeNumberError } from './errors.ts';
 
 function parsePositiveInteger(input: unknown): number | null {
   if (typeof input === 'number') {

@@ -5,8 +5,8 @@ import {
   InMemoryCacheStore,
   InvalidEpisodeNumberError,
   NoOpCacheStore,
-} from '../src/index.js';
-import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.js';
+} from '../src/index.ts';
+import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '../src/testing/index.ts';
 
 const characters = [
   makeCharacter({ id: 1, name: 'Rick Sanchez' }),

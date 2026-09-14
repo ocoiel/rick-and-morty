@@ -1,11 +1,11 @@
-import type { Character, EpisodeNumber } from '../domain/index.js';
-import { EpisodeNotFoundError } from '../domain/index.js';
+import type { Character, EpisodeNumber } from '../domain/index.ts';
+import { EpisodeNotFoundError } from '../domain/index.ts';
 import type {
   CharacterGateway,
   EpisodeAppearance,
   EpisodeGateway,
   EpisodeRecord,
-} from '../application/ports/index.js';
+} from '../application/ports/index.ts';
 
 export interface InMemoryEpisodeGatewaySeed {
   readonly episodes: readonly EpisodeRecord[];

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { EpisodeCast, EpisodeNumber } from '../src/domain/index.js';
-import { makeCharacter } from '../src/testing/index.js';
+import { EpisodeCast, EpisodeNumber } from '../src/domain/index.ts';
+import { makeCharacter } from '../src/testing/index.ts';
 
 const episode = {
   number: EpisodeNumber.create(1),

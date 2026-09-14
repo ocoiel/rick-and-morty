@@ -4,7 +4,7 @@ import {
   EpisodeNumber,
   RickAndMortyHttpGateway,
   UpstreamUnavailableError,
-} from '../src/index.js';
+} from '../src/index.ts';
 
 const BASE_URL = 'https://api.test/api';
 
