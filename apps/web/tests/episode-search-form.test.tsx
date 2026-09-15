@@ -88,9 +88,9 @@ describe('EpisodeSearchForm', () => {
     expect(push).toHaveBeenCalledWith('/episode/51');
   });
 
-  it('preenche o campo com o episódio atual quando informado', () => {
-    render(<EpisodeSearchForm totalEpisodes={51} initialValue="28" />);
+  it('começa vazio, porque o formulário só existe na home', () => {
+    render(<EpisodeSearchForm totalEpisodes={51} />);
 
-    expect(screen.getByLabelText(/número do episódio/iu)).toHaveValue(28);
+    expect(screen.getByLabelText(/número do episódio/iu)).toHaveValue(null);
   });
 });
