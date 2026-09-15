@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
+import { CharacterAvatar } from './character-avatar';
 import { StatusBadge } from './status-badge';
 
 import type { Character } from '@zrp/core';
@@ -71,11 +71,10 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
         className="rise relative z-10 max-h-[88dvh] w-full max-w-md overflow-y-auto rounded-t-2xl border border-border bg-surface p-5 sm:rounded-2xl"
       >
         <div className="flex items-start gap-4">
-          <Image
-            src={character.imageUrl}
-            alt=""
-            width={88}
-            height={88}
+          <CharacterAvatar
+            characterId={character.id}
+            originUrl={character.imageUrl}
+            size={88}
             className="rounded-xl border border-border"
           />
           <div className="min-w-0 flex-1">

@@ -23,7 +23,12 @@ export function CharacterCard({ character, priority, onSelect, onPrefetch }: Cha
       className="group relative flex h-full w-full flex-col overflow-hidden rounded-card border border-border bg-surface text-left transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-portal-dim hover:shadow-[0_8px_30px_-12px_rgba(127,209,74,0.35)]"
     >
       <div className="relative aspect-square overflow-hidden bg-surface-raised">
-        <CharacterAvatar src={character.imageUrl} priority={priority} />
+        <CharacterAvatar
+          characterId={character.id}
+          originUrl={character.imageUrl}
+          priority={priority}
+          className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60" />
       </div>
 

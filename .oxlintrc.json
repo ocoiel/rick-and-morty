@@ -1,7 +1,15 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-  "jsPlugins": ["@shadcn/lint"],
-  "plugins": ["typescript", "unicorn", "oxc", "import", "promise"],
+  "jsPlugins": [
+    "@shadcn/lint"
+  ],
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "promise"
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "error",
@@ -31,16 +39,30 @@
     "max-classes-per-file": "off",
     "import/no-unassigned-import": "off"
   },
-  "ignorePatterns": ["**/dist/**", "**/.next/**", "**/coverage/**", "**/node_modules/**"],
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/node_modules/**"
+  ],
   "overrides": [
     {
-      "files": ["**/http-client.ts", "**/rick-and-morty-gateway.ts"],
+      "files": [
+        "**/http-client.ts",
+        "**/rick-and-morty-gateway.ts",
+        "**/scripts/prefetch-avatars.ts"
+      ],
       "rules": {
         "no-await-in-loop": "off"
       }
     },
     {
-      "files": ["**/tests/**", "**/*.test.ts", "**/*.test.tsx", "**/e2e/**"],
+      "files": [
+        "**/tests/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/e2e/**"
+      ],
       "rules": {
         "typescript/no-explicit-any": "off",
         "no-console": "off",
@@ -50,13 +72,17 @@
       }
     },
     {
-      "files": ["**/*.tsx"],
+      "files": [
+        "**/*.tsx"
+      ],
       "rules": {
         "max-lines-per-function": "off"
       }
     },
     {
-      "files": ["**/routes/*.ts"],
+      "files": [
+        "**/routes/*.ts"
+      ],
       "rules": {
         "require-await": "off"
       }
