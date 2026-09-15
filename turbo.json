@@ -33,6 +33,9 @@
     "@zrp/mobile#build": {
       "dependsOn": ["^build"],
       "outputs": ["build/web/**"]
+    },
+    "@zrp/mobile#lint": {
+      "dependsOn": ["^build"]
     }
   }
 }
