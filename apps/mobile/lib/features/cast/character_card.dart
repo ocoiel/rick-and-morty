@@ -27,8 +27,11 @@ class CharacterCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AspectRatio(
-              aspectRatio: 1,
+            // Expanded, e não AspectRatio: o texto toma a altura que precisa e a
+            // imagem absorve a sobra. Com a imagem de altura fixa, qualquer
+            // diferença de métrica de fonte estoura a célula — no iOS estourava
+            // por 2 pixels, e aumentar a fonte do sistema estouraria mais.
+            Expanded(
               child: Image.network(
                 character.imageUrl,
                 fit: BoxFit.cover,

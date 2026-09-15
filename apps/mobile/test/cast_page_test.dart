@@ -59,4 +59,40 @@ void main() {
     expect(find.byType(CharacterCard), findsNothing);
     expect(find.textContaining('Nenhum personagem corresponde'), findsOneWidget);
   });
+
+  testWidgets('acomoda fonte ampliada sem estourar o card', (tester) async {
+    // O card estourava a célula da grade em 2 pixels no iPhone, cortando o
+    // badge de status: a imagem tinha altura fixa e sobrava ao texto o que
+    // restasse. Numa tela estreita com fonte ampliada, a mesma pressão
+    // aparece em qualquer plataforma — a superfície padrão do teste é larga
+    // demais para reproduzir.
+    tester.view.physicalSize = const Size(402, 874);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          episodeCastProvider.overrideWith(
+            (ref, number) async => makeEpisodeCast(),
+          ),
+        ],
+        child: MaterialApp(
+          theme: buildAppTheme(),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: const TextScaler.linear(1.6),
+            ),
+            child: child!,
+          ),
+          home: const CastPage(episodeNumber: 1),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(CharacterCard), findsWidgets);
+  });
 }
