@@ -1,0 +1,11 @@
+swagger_parser:
+  schema_path: ../bff/openapi.json
+  output_directory: lib/api
+  json_serializer: json_serializable
+  client_postfix: Client
+  language: dart
+  put_clients_in_folder: true
+  enums_to_json: true
+  unknown_enum_value: true
+  squash_clients: false
+  prefer_schema_source: true
