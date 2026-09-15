@@ -10,7 +10,6 @@
     "test": "flutter test --coverage",
     "prelint": "node --experimental-strip-types scripts/sync-tokens.ts",
     "lint": "flutter analyze",
-    "typecheck": "dart analyze --fatal-infos",
     "codegen": "dart run swagger_parser && dart run build_runner build",
     "dev": "flutter run -d chrome"
   },

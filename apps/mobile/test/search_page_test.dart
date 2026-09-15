@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rick_and_morty/api/export.dart';
 import 'package:rick_and_morty/core/api.dart';
+import 'package:rick_and_morty/core/theme.dart';
 import 'package:rick_and_morty/features/search/search_page.dart';
 
 Future<void> pumpSearchPage(WidgetTester tester, {int total = 51}) async {
@@ -16,7 +17,7 @@ Future<void> pumpSearchPage(WidgetTester tester, {int total = 51}) async {
           ),
         ),
       ],
-      child: const MaterialApp(home: SearchPage()),
+      child: MaterialApp(theme: buildAppTheme(), home: const SearchPage()),
     ),
   );
   await tester.pumpAndSettle();
@@ -62,7 +63,7 @@ void main() {
             (ref) async => throw Exception('conexão recusada'),
           ),
         ],
-        child: const MaterialApp(home: SearchPage()),
+        child: MaterialApp(theme: buildAppTheme(), home: const SearchPage()),
       ),
     );
     await tester.pumpAndSettle();
