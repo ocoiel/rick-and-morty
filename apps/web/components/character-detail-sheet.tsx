@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { X } from 'lucide-react';
 import { CharacterAvatar } from './character-avatar';
 import { StatusBadge } from './status-badge';
 
@@ -68,14 +69,14 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
         aria-modal="true"
         aria-labelledby="detalhe-nome"
         data-testid="character-detail"
-        className="rise relative z-10 max-h-[88dvh] w-full max-w-md overflow-y-auto rounded-t-2xl border border-border bg-surface p-5 sm:rounded-2xl"
+        className="rise relative z-10 max-h-[88dvh] w-full max-w-md overflow-y-auto rounded-t-[34px] border border-border bg-surface p-5 sm:rounded-[34px]"
       >
         <div className="flex items-start gap-4">
           <CharacterAvatar
             characterId={character.id}
             originUrl={character.imageUrl}
             size={88}
-            className="rounded-xl border border-border"
+            className="rounded-xl outline outline-1 -outline-offset-1 outline-[oklch(1_0_0/0.1)]"
           />
           <div className="min-w-0 flex-1">
             <h2
@@ -93,9 +94,9 @@ export function CharacterDetailSheet({ character, onClose }: CharacterDetailShee
             type="button"
             onClick={onClose}
             aria-label="Fechar"
-            className="rounded-lg border border-border px-2 py-1 text-ink-muted transition-colors hover:border-border-strong hover:text-ink"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-border text-ink-muted transition-[color,border-color,scale] duration-150 ease-[cubic-bezier(0.2,0,0,1)] hover:border-border-strong hover:text-ink active:scale-[0.96]"
           >
-            ✕
+            <X aria-hidden strokeWidth={1.5} className="size-4" />
           </button>
         </div>
 

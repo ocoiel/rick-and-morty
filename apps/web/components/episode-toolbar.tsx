@@ -42,7 +42,7 @@ export function EpisodeToolbar({ current, total }: EpisodeToolbarProps) {
         href="/"
         className="inline-flex shrink-0 items-center gap-2 rounded-lg py-2 pr-2 text-sm text-ink-muted transition-colors hover:text-portal"
       >
-        <ArrowLeft aria-hidden className="size-5 sm:size-4" />
+        <ArrowLeft aria-hidden strokeWidth={1.5} className="size-5 sm:size-4" />
         <span className="max-sm:sr-only">Buscar outro episódio</span>
       </Link>
 

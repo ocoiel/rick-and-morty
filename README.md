@@ -52,7 +52,6 @@ TanStack Query 5 · Tailwind 4 · Vitest 4 · Playwright · oxlint · Turborepo 
 
 <img width="961" height="390" alt="file-0d76406b177f4376f4a191db4663a9bb" src="https://github.com/user-attachments/assets/5720e877-de03-4a9c-817d-a38588fc4e5c" />
 
-
 ---
 
 ## Mais

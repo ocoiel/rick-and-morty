@@ -17,3 +17,9 @@ blob-report/
 .vercel
 npm-debug.log*
 pnpm-debug.log*
+.vercel
+
+# Ferramental de agentes, instalado localmente.
+.agents/
+.claude/
+skills-lock.json
