@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rick_and_morty/core/api.dart';
+import 'package:rick_and_morty/core/theme.dart';
 import 'package:rick_and_morty/features/cast/cast_page.dart';
 import 'package:rick_and_morty/features/cast/character_card.dart';
 
@@ -14,7 +15,7 @@ Future<void> pumpCastPage(WidgetTester tester) async {
       overrides: [
         episodeCastProvider.overrideWith((ref, number) async => makeEpisodeCast()),
       ],
-      child: const MaterialApp(home: CastPage(episodeNumber: 1)),
+      child: MaterialApp(theme: buildAppTheme(), home: const CastPage(episodeNumber: 1)),
     ),
   );
   await tester.pumpAndSettle();

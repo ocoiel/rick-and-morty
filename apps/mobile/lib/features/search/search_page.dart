@@ -131,21 +131,8 @@ class _Form extends StatelessWidget {
           style: const TextStyle(fontSize: 18, color: AppColors.ink),
           decoration: InputDecoration(
             labelText: 'Número do episódio',
-            labelStyle: const TextStyle(color: AppColors.inkMuted),
             hintText: '1 a $total',
-            hintStyle: const TextStyle(color: AppColors.inkFaint),
             errorText: error,
-            errorStyle: const TextStyle(color: AppColors.plumbus),
-            filled: true,
-            fillColor: AppColors.surface,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSpacing.md),
-              borderSide: const BorderSide(color: AppColors.border),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSpacing.md),
-              borderSide: const BorderSide(color: AppColors.portal),
-            ),
           ),
         ),
         const SizedBox(height: AppSpacing.lg),

@@ -125,18 +125,9 @@ class _Cast extends StatelessWidget {
                   style: const TextStyle(color: AppColors.ink),
                   decoration: InputDecoration(
                     hintText: 'Buscar por nome…',
-                    hintStyle: const TextStyle(color: AppColors.inkFaint),
                     prefixIcon: const Icon(Icons.search, color: AppColors.inkFaint),
-                    filled: true,
-                    fillColor: AppColors.surface,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.sm),
-                      borderSide: const BorderSide(color: AppColors.border),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppSpacing.sm),
-                      borderSide: const BorderSide(color: AppColors.portal),
-                    ),
+                    enabledBorder: appInputBorder(AppSpacing.sm),
+                    focusedBorder: appInputBorder(AppSpacing.sm, focused: true),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
