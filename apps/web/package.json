@@ -10,6 +10,8 @@
     "test": "vitest run --coverage",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:record": "E2E_RECORD=true playwright test",
+    "test:e2e:report": "playwright show-report",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint app components lib tests e2e scripts proxy.ts",
     "prebuild": "node --experimental-strip-types scripts/prefetch-catalog.ts",
