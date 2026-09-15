@@ -14,3 +14,8 @@ apps/mobile/ios/
 apps/mobile/web/
 apps/mobile/build/
 .dart_tool/
+
+# Ferramental de agentes, instalado localmente.
+.agents/
+.claude/
+skills-lock.json
