@@ -10,6 +10,12 @@ Construído sobre a [Rick and Morty API](https://rickandmortyapi.com/documentati
 | -------------------------- | ---------------------------- |
 | ![Elenco](docs/elenco.png) | ![Detalhe](docs/detalhe.png) |
 
+
+
+https://github.com/user-attachments/assets/a28db08b-c0e3-4906-ae53-124be714b27d
+
+
+
 ---
 
 ## Começando
