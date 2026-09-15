@@ -29,6 +29,10 @@
     "typecheck": {
       "dependsOn": ["^build"]
     },
-    "lint": {}
+    "lint": {},
+    "@zrp/mobile#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/web/**"]
+    }
   }
 }
