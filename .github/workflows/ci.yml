@@ -65,20 +65,15 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Instalar Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 3.47.4
-          channel: stable
-          cache: true
-
       - run: pnpm install --frozen-lockfile
 
       - name: Instalar navegadores
         run: pnpm --filter @zrp/web exec playwright install --with-deps chromium
 
+      # Só o web: os cenários rodam contra o Next, e o build do monorepo
+      # arrastava um `flutter build web --release` que ninguém usa aqui.
       - name: Construir aplicação
-        run: pnpm build
+        run: pnpm build --filter @zrp/web
 
       - name: Executar cenários
         run: pnpm --filter @zrp/web exec playwright test --project=chromium
