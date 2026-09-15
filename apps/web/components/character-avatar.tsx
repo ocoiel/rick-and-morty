@@ -1,56 +1,48 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
-const MAX_ATTEMPTS = 4;
-const BACKOFF_BASE_MS = 700;
-
 export interface CharacterAvatarProps {
-  readonly src: string;
-  readonly priority: boolean;
+  readonly characterId: number;
+  readonly originUrl: string;
+  readonly priority?: boolean;
+  /** Em pixels. Sem isso o avatar preenche o contêiner posicionado. */
+  readonly size?: number;
+  readonly className?: string;
 }
 
 /**
- * A origem dos avatares limita requisições por janela de tempo. Num episódio
- * cheio o navegador pede 65 imagens de uma vez e parte volta 429, o que
- * deixaria buracos permanentes no grid. Cada avatar tenta de novo com espera
- * crescente até o cache do otimizador encher.
+ * Os avatares são baixados no build (scripts/prefetch-avatars.ts) e servidos
+ * como estático da própria origem: nada de requisição à API em execução, que
+ * limita por IP no Cloudflare (erro 1015) e devolvia 429 ao navegar entre
+ * episódios.
+ *
+ * Já chegam em WebP 320px, o tamanho exato do card, então dispensam o
+ * otimizador. A API fica só como rede de segurança para um personagem que
+ * entre no catálogo sem ter passado pelo build.
  */
-export function CharacterAvatar({ src, priority }: CharacterAvatarProps) {
-  const [attempt, setAttempt] = useState(0);
-  const [failed, setFailed] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+export function CharacterAvatar({
+  characterId,
+  originUrl,
+  priority = false,
+  size,
+  className,
+}: CharacterAvatarProps) {
+  const [useOrigin, setUseOrigin] = useState(false);
 
-  useEffect(() => () => void (timer.current && clearTimeout(timer.current)), []);
+  const shared = {
+    src: useOrigin ? originUrl : `/avatars/${characterId}.webp`,
+    alt: '',
+    priority,
+    loading: priority ? ('eager' as const) : ('lazy' as const),
+    unoptimized: !useOrigin,
+    onError: () => setUseOrigin(true),
+  };
 
-  function handleError() {
-    if (attempt >= MAX_ATTEMPTS) {
-      setFailed(true);
-      return;
-    }
-
-    // O jitter evita que as 65 imagens voltem todas juntas e derrubem de novo.
-    const espera = BACKOFF_BASE_MS * 2 ** attempt + Math.random() * 400;
-    timer.current = setTimeout(() => setAttempt((current) => current + 1), espera);
+  if (size !== undefined) {
+    return <Image {...shared} width={size} height={size} className={className} />;
   }
 
-  if (failed) {
-    return <div aria-hidden className="size-full bg-surface-raised" />;
-  }
-
-  return (
-    <Image
-      // Trocar a key remonta o <img>, que é o que dispara a nova tentativa.
-      key={attempt}
-      src={src}
-      alt=""
-      fill
-      priority={priority}
-      loading={priority ? 'eager' : 'lazy'}
-      sizes="320px"
-      onError={handleError}
-      className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-    />
-  );
+  return <Image {...shared} fill sizes="320px" className={className} />;
 }

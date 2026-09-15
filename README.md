@@ -240,6 +240,21 @@ cache funcionando em tempo real.
 Variáveis de ambiente em [`.env.example`](.env.example). Todas têm valor padrão
 funcional; nenhuma é obrigatória.
 
+### Avatares
+
+Os 826 avatares ficam versionados em `apps/web/public/avatars`, em WebP de
+320px. A API limita requisições por IP no Cloudflare, e buscá-los em execução
+fazia o grid ficar cheio de buracos ao navegar entre episódios.
+
+Não são regenerados no build. Só se a série ganhar episódios novos:
+
+```bash
+pnpm --filter @zrp/web avatars
+```
+
+O script pula o que já está em disco e busca o resto no repositório da própria
+API, que publica as mesmas imagens sob BSD-3.
+
 ---
 
 ## Stack

@@ -45,9 +45,9 @@ describe('EpisodeToolbar', () => {
     const user = userEvent.setup();
     render(<EpisodeToolbar current={1} total={51} />);
 
-    const campo = screen.getByLabelText(/número do episódio/iu);
-    await user.clear(campo);
-    await user.type(campo, '42{Enter}');
+    const input = screen.getByLabelText(/número do episódio/iu);
+    await user.clear(input);
+    await user.type(input, '42{Enter}');
 
     expect(push).toHaveBeenCalledWith('/episode/42');
   });
@@ -56,21 +56,21 @@ describe('EpisodeToolbar', () => {
     const user = userEvent.setup();
     render(<EpisodeToolbar current={7} total={51} />);
 
-    const campo = screen.getByLabelText(/número do episódio/iu);
-    await user.clear(campo);
-    await user.type(campo, '999{Enter}');
+    const input = screen.getByLabelText(/número do episódio/iu);
+    await user.clear(input);
+    await user.type(input, '999{Enter}');
 
     expect(push).not.toHaveBeenCalled();
-    expect(campo).toHaveValue(7);
+    expect(input).toHaveValue(7);
   });
 
   it('não navega quando o número digitado é o episódio atual', async () => {
     const user = userEvent.setup();
     render(<EpisodeToolbar current={7} total={51} />);
 
-    const campo = screen.getByLabelText(/número do episódio/iu);
-    await user.clear(campo);
-    await user.type(campo, '7{Enter}');
+    const input = screen.getByLabelText(/número do episódio/iu);
+    await user.clear(input);
+    await user.type(input, '7{Enter}');
 
     expect(push).not.toHaveBeenCalled();
   });
@@ -79,9 +79,9 @@ describe('EpisodeToolbar', () => {
     const user = userEvent.setup();
     render(<EpisodeToolbar current={3} total={51} />);
 
-    const campo = screen.getByLabelText(/número do episódio/iu);
-    await user.clear(campo);
-    await user.type(campo, '9');
+    const input = screen.getByLabelText(/número do episódio/iu);
+    await user.clear(input);
+    await user.type(input, '9');
     await user.tab();
 
     expect(push).toHaveBeenCalledWith('/episode/9');
