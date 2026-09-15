@@ -2,6 +2,8 @@
 
 import { useDeferredValue, useId, useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { foldForSearch } from '@/lib/text';
 import { CharacterCard } from './character-card';
 import { CharacterDetailSheet, characterEpisodesQuery } from './character-detail-sheet';
@@ -40,25 +42,26 @@ export function CastExplorer({ characters }: CastExplorerProps) {
 
   return (
     <>
-      <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="sm:max-w-xs sm:flex-1">
-          <label
-            htmlFor={filterId}
-            className="mb-1.5 block text-xs uppercase tracking-wide text-ink-faint"
-          >
-            Filtrar elenco
-          </label>
-          <input
+      <div className="mb-5">
+        <label htmlFor={filterId} className="sr-only">
+          Filtrar elenco
+        </label>
+        <div className="relative">
+          <Search
+            aria-hidden
+            className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-ink-faint"
+          />
+          <Input
             id={filterId}
             type="search"
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
             placeholder="Buscar por nome…"
-            className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-ink transition-colors placeholder:text-ink-faint hover:border-border-strong focus:border-portal focus:outline-none"
+            className="h-12 bg-surface pl-10 text-base md:text-base"
           />
         </div>
 
-        <p className="text-sm text-ink-muted" aria-live="polite" data-testid="cast-count">
+        <p className="mt-2 text-sm text-ink-muted" aria-live="polite" data-testid="cast-count">
           {visible.length === characters.length
             ? `${characters.length} ${characters.length === 1 ? 'personagem' : 'personagens'}`
             : `${visible.length} de ${characters.length}`}
