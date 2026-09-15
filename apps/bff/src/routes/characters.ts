@@ -1,11 +1,12 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
-import type { Container } from '@zrp/core';
 import { PUBLIC_DAY_CACHE_CONTROL } from '../cache-control.ts';
 import {
   characterAppearancesSchema,
   errorSchema,
   resourceIdParamsSchema,
 } from '../contract/schemas.ts';
+
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import type { Container } from '@zrp/core';
 
 export function createCharacterRoutes(container: Container): FastifyPluginAsyncZod {
   return async (app) => {

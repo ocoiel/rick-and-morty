@@ -1,11 +1,12 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useDeferredValue, useId, useMemo, useState } from 'react';
-import type { Character } from '@zrp/core';
+import { useQueryClient } from '@tanstack/react-query';
 import { foldForSearch } from '@/lib/text';
 import { CharacterCard } from './character-card';
-import { characterEpisodesQuery, CharacterDetailSheet } from './character-detail-sheet';
+import { CharacterDetailSheet, characterEpisodesQuery } from './character-detail-sheet';
+
+import type { Character } from '@zrp/core';
 
 const PRIORITY_IMAGE_COUNT = 8;
 

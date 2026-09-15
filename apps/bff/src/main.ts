@@ -1,18 +1,14 @@
-import { loadConfig } from './config.js';
-import { buildServer } from './server.js';
+import { loadConfig } from './config.ts';
+import { buildServer } from './server.ts';
 
 const config = loadConfig();
 const app = await buildServer({ config });
 
-const shutdown = async (signal: string) => {
-  app.log.info({ signal }, 'encerrando servidor');
-  await app.close();
-  process.exit(0);
-};
-
+// `once`: um segundo Ctrl+C não dispara um encerramento concorrente.
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
-  process.on(signal, () => {
-    void shutdown(signal);
+  process.once(signal, () => {
+    app.log.info({ signal }, 'encerrando servidor');
+    void app.close().then(() => process.exit(0));
   });
 }
 

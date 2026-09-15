@@ -1,6 +1,8 @@
-import type { Character } from '../../domain/index.js';
-import { EpisodeCast, EpisodeNumber } from '../../domain/index.js';
-import type { CacheStore, EpisodeGateway } from '../ports/index.js';
+import { ONE_DAY_MS } from '../../cache-policy.ts';
+import { EpisodeCast, EpisodeNumber } from '../../domain/index.ts';
+
+import type { Character } from '../../domain/index.ts';
+import type { CacheStore, EpisodeGateway } from '../ports/index.ts';
 
 export interface GetEpisodeCastInput {
   readonly episode: unknown;
@@ -19,8 +21,6 @@ export interface EpisodeCastPayload {
     readonly source: 'cache' | 'origin';
   };
 }
-
-export const EPISODE_CAST_TTL_MS = 24 * 60 * 60 * 1000;
 
 const cacheKeyFor = (episodeNumber: EpisodeNumber) => `episode-cast:${episodeNumber.value}`;
 
@@ -66,7 +66,7 @@ export class GetEpisodeCastUseCase {
       meta: { total: cast.size, source: 'origin' },
     };
 
-    await this.cache.set(cacheKey, payload, EPISODE_CAST_TTL_MS);
+    await this.cache.set(cacheKey, payload, ONE_DAY_MS);
 
     return payload;
   }

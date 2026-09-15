@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   ...(process.env.BUILD_STANDALONE === 'true' && { output: 'standalone' as const }),
   transpilePackages: ['@zrp/core'],
   images: {
-    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'rickandmortyapi.com', pathname: '/api/character/avatar/**' },
     ],

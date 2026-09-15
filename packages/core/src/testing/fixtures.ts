@@ -1,5 +1,5 @@
-import type { Character } from '../domain/index.ts';
 import type { EpisodeRecord } from '../application/ports/index.ts';
+import type { Character } from '../domain/index.ts';
 
 export function makeCharacter(overrides: Partial<Character> = {}): Character {
   return {

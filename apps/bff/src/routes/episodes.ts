@@ -1,5 +1,3 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
-import type { Container } from '@zrp/core';
 import { PUBLIC_DAY_CACHE_CONTROL } from '../cache-control.ts';
 import {
   episodeCastSchema,
@@ -7,6 +5,9 @@ import {
   errorSchema,
   resourceIdParamsSchema,
 } from '../contract/schemas.ts';
+
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import type { Container } from '@zrp/core';
 
 export function createEpisodeRoutes(container: Container): FastifyPluginAsyncZod {
   return async (app) => {

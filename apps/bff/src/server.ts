@@ -1,17 +1,17 @@
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
-import Fastify, { type FastifyInstance } from 'fastify';
-import {
-  serializerCompiler,
-  validatorCompiler,
-  type ZodTypeProvider,
-} from 'fastify-type-provider-zod';
-import { createContainer, type Container } from '@zrp/core';
-import type { AppConfig } from './config.ts';
+import Fastify from 'fastify';
+import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import { createContainer } from '@zrp/core';
 import { healthSchema } from './contract/schemas.ts';
 import { registerErrorHandler } from './plugins/error-handler.ts';
 import { registerOpenApi } from './plugins/openapi.ts';
 import { createApiRoutes } from './routes/index.ts';
+
+import type { FastifyInstance } from 'fastify';
+import type { ZodTypeProvider } from 'fastify-type-provider-zod';
+import type { Container } from '@zrp/core';
+import type { AppConfig } from './config.ts';
 
 export interface BuildServerOptions {
   readonly config: AppConfig;

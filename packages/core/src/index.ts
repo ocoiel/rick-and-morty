@@ -1,10 +1,16 @@
-export * from './domain/index.js';
-export * from './application/index.js';
-export { RickAndMortyHttpGateway } from './infrastructure/http/rick-and-morty-gateway.js';
-export type { RickAndMortyGatewayOptions } from './infrastructure/http/rick-and-morty-gateway.js';
-export { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.js';
-export { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.js';
-export { SnapshotGateway } from './infrastructure/snapshot/catalog-snapshot.js';
-export type { CatalogSnapshot } from './infrastructure/snapshot/catalog-snapshot.js';
-export { createContainer } from './composition-root.js';
-export type { Container, ContainerConfig } from './composition-root.js';
+export * from './domain/index.ts';
+export * from './application/index.ts';
+export {
+  DEFAULT_API_BASE_URL,
+  DEFAULT_UPSTREAM_RETRIES,
+  DEFAULT_UPSTREAM_TIMEOUT_MS,
+  RickAndMortyHttpGateway,
+} from './infrastructure/http/rick-and-morty-gateway.ts';
+export type { RickAndMortyGatewayOptions } from './infrastructure/http/rick-and-morty-gateway.ts';
+export { InMemoryCacheStore } from './infrastructure/cache/in-memory-cache-store.ts';
+export { NoOpCacheStore } from './infrastructure/cache/no-op-cache-store.ts';
+export { SnapshotGateway } from './infrastructure/snapshot/catalog-snapshot.ts';
+export type { CatalogSnapshot } from './infrastructure/snapshot/catalog-snapshot.ts';
+export { ONE_DAY_MS, ONE_DAY_SECONDS, PUBLIC_DAY_CACHE_CONTROL } from './cache-policy.ts';
+export { createContainer } from './composition-root.ts';
+export type { Container, ContainerConfig } from './composition-root.ts';

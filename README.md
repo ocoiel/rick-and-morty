@@ -4,6 +4,12 @@ Informe o número de um episódio e veja todo o elenco em ordem alfabética.
 
 Construído sobre a [Rick and Morty API](https://rickandmortyapi.com/documentation).
 
+![Busca por episódio](docs/home.png)
+
+| Elenco do episódio         | Detalhe do personagem        |
+| -------------------------- | ---------------------------- |
+| ![Elenco](docs/elenco.png) | ![Detalhe](docs/detalhe.png) |
+
 ---
 
 ## Começando

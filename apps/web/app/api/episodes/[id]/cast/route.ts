@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
-import { DomainError, EpisodeNotFoundError, InvalidEpisodeNumberError } from '@zrp/core';
+import {
+  DomainError,
+  EpisodeNotFoundError,
+  InvalidEpisodeNumberError,
+  PUBLIC_DAY_CACHE_CONTROL,
+} from '@zrp/core';
 import { container } from '@/lib/container';
-
-const CACHE_CONTROL = 'public, max-age=86400, stale-while-revalidate=86400';
 
 function statusFor(error: DomainError): number {
   if (error instanceof InvalidEpisodeNumberError) return 400;
@@ -20,7 +23,7 @@ export async function GET(
     const payload = await container.getEpisodeCast.execute({ episode: id });
 
     return NextResponse.json(payload, {
-      headers: { 'cache-control': CACHE_CONTROL, 'x-cache-source': payload.meta.source },
+      headers: { 'cache-control': PUBLIC_DAY_CACHE_CONTROL, 'x-cache-source': payload.meta.source },
     });
   } catch (error) {
     if (error instanceof DomainError) {
