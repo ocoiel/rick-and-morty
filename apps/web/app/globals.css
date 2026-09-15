@@ -1,31 +1,9 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
+@import '@zrp/design-tokens/tokens.css';
 
 @custom-variant dark (&:is(.dark *));
-
-@theme {
-  --color-void: #07090c;
-  --color-surface: #0e1319;
-  --color-surface-raised: #151c24;
-  --color-border-strong: #2d3a47;
-
-  --color-portal: #7fd14a;
-  --color-portal-bright: #a5f065;
-  --color-portal-dim: #3f6b24;
-  --color-plumbus: #f0a6c8;
-  --color-cosmic: #5bc0eb;
-
-  --color-ink: #eef4f8;
-  --color-ink-muted: #9aa8b6;
-  /* 5.08:1 sobre surface. O #64717e anterior ficava em 3.74:1 e reprovava
-     no AA justamente onde mais aparece: placeholder e rótulos de espécie. */
-  --color-ink-faint: #7a8794;
-
-  --radius-card: 14px;
-
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
-}
 
 @layer base {
   * {
@@ -138,7 +116,6 @@
 
 @theme inline {
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

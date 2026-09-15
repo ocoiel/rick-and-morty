@@ -3,7 +3,7 @@ import { InMemoryEpisodeGateway, makeCharacter, makeEpisodeRecord } from '@zrp/c
 import { loadConfig } from '../src/config.ts';
 import { buildServer } from '../src/server.ts';
 
-import type { EpisodeGateway } from '@zrp/core';
+import type { CharacterGateway, EpisodeGateway } from '@zrp/core';
 
 export function buildFakeGateway(): InMemoryEpisodeGateway {
   return new InMemoryEpisodeGateway({
@@ -19,9 +19,16 @@ export function buildFakeGateway(): InMemoryEpisodeGateway {
   });
 }
 
-export function buildTestServer(episodeGateway: EpisodeGateway = buildFakeGateway()) {
+export function buildTestServer(
+  episodeGateway: EpisodeGateway = buildFakeGateway(),
+  characterGateway: CharacterGateway = buildFakeGateway(),
+) {
   return buildServer({
     config: loadConfig({ LOG_LEVEL: 'silent' } as NodeJS.ProcessEnv),
-    container: createContainer({ episodeGateway, cacheStore: new InMemoryCacheStore() }),
+    container: createContainer({
+      episodeGateway,
+      characterGateway,
+      cacheStore: new InMemoryCacheStore(),
+    }),
   });
 }

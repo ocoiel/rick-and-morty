@@ -6,6 +6,7 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "openapi": "node --experimental-strip-types scripts/generate-openapi.ts",
     "dev": "node --watch --env-file-if-exists=.env --experimental-strip-types src/main.ts",
     "start": "node --env-file-if-exists=.env dist/main.js",
     "test": "vitest run --coverage",
@@ -16,8 +17,11 @@
   "dependencies": {
     "@fastify/cors": "^11.1.0",
     "@fastify/helmet": "^13.0.2",
+    "@fastify/swagger": "^9.8.1",
     "@zrp/core": "workspace:*",
     "fastify": "^5.12.4",
+    "fastify-type-provider-zod": "^7.0.0",
+    "openapi-types": "^12.1.3",
     "zod": "^4.6.5"
   },
   "devDependencies": {
