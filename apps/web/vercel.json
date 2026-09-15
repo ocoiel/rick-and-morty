@@ -1,4 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "next build"
+  "buildCommand": "pnpm --filter @zrp/design-tokens --filter @zrp/core build && next build"
 }
