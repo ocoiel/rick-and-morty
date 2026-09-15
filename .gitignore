@@ -17,4 +17,3 @@ blob-report/
 .vercel
 npm-debug.log*
 pnpm-debug.log*
-**/public/avatars/

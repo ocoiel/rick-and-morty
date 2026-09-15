@@ -1,3 +1,11 @@
+/**
+ * Utilitário manual: `pnpm --filter @zrp/web avatars`.
+ *
+ * Os avatares ficam versionados em public/avatars porque não mudam — são 51
+ * episódios de temporadas encerradas. Não faz parte do build: rode só quando a
+ * série ganhar episódios novos e o catálogo trouxer personagens sem imagem em
+ * disco. O script pula o que já existe, então rodar de novo não custa nada.
+ */
 import { execFile } from 'node:child_process';
 import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -18,10 +26,10 @@ const OUTPUT_DIR = new URL('../public/avatars/', import.meta.url);
  *
  * Buscar de lá evita o rate limit da API, que é um limite do Cloudflare por IP
  * (erro 1015) avaliado antes do cache: ~150 requisições de estouro e reposição
- * de ~1,6/s, compartilhado entre imagens e JSON. Baixar os 826 avatares de lá
- * levava 3m34s; o tarball é uma requisição só.
+ * de ~1,6/s, compartilhado entre imagens e JSON. Baixar os 826 avatares pela
+ * API levava 3m34s; o tarball é uma requisição só.
  *
- * O commit é fixo para o build ser reprodutível.
+ * O commit é fixo porque images/ não muda desde novembro de 2021.
  */
 const REPO_COMMIT = 'ca9118a9da49e69c6387357e0f02163f53a79be4';
 const TARBALL_URL = `https://codeload.github.com/afuh/rick-and-morty-api/tar.gz/${REPO_COMMIT}`;
@@ -108,4 +116,14 @@ async function main() {
   }
 }
 
-await main();
+/**
+ * Um avatar que falte não justifica derrubar o build: o CharacterAvatar cai
+ * para a URL da API quando o arquivo local não existe. Pior caso, o site
+ * volta a depender da origem — que é exatamente o comportamento anterior.
+ */
+try {
+  await main();
+} catch (error) {
+  const reason = error instanceof Error ? error.message : String(error);
+  log(`Avatares: não foi possível gerar (${reason}). O site vai buscá-los na origem.`);
+}

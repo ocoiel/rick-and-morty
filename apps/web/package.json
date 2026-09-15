@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint app components lib tests e2e scripts proxy.ts",
-    "prebuild": "node --experimental-strip-types scripts/prefetch-catalog.ts && node --experimental-strip-types scripts/prefetch-avatars.ts"
+    "prebuild": "node --experimental-strip-types scripts/prefetch-catalog.ts",
+    "avatars": "node --experimental-strip-types scripts/prefetch-avatars.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.102.8",
